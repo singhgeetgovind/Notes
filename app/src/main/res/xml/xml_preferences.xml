@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="Messages">
+        <SwitchPreference
+            android:key="@string/app_name"
+            android:summaryOff="@string/app_name"
+            android:title="@string/app_name" />
+        <SwitchPreference
+            android:key="@string/app_name"
+            android:summaryOff="@string/app_name"
+            android:title="@string/app_name" />
+    </PreferenceCategory>
+</PreferenceScreen>

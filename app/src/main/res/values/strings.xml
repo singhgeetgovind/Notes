@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Notes</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="low_priority">Low Priority</string>
+    <string name="medium_priority">Medium Priority</string>
+    <string name="high_priority">High Priority</string>
+    <string name="delete">Delete</string>
+    <string name="calendar">Calendar</string>
+    <string name="search">Search</string>
+    <string name="save">Save</string>
+    <string name="view">View</string>
+    <string name="update">Update</string>
+    <string name="emptyMessage">Hey!! Look &#128064; there is an empty space,Let\'s fill it.</string>
+    <string name="emptyNotesMessage">No Notes</string>
+    <string name="add_button">Add Button</string>
+</resources>
