@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.selection.ItemDetailsLookup
+import androidx.recyclerview.selection.ItemKeyProvider
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -34,30 +35,18 @@ class ItemAdapter(private val clickListener: OnClickListener) :
     private val EMPTY_VIEW = 90090
 
     object DiffCallback : DiffUtil.ItemCallback<BaseNotes>() {
-        override fun areItemsTheSame(oldItem: BaseNotes, newItem: BaseNotes): Boolean =
-            try{
-                when (oldItem) {
-                    is Notes -> {
-                        if (newItem is Notes) oldItem.id == newItem.id else false
-                    }
-                    else -> oldItem == newItem
-                }
-            }catch (E:Exception){
-                Log.d("TAG", "areItemsTheSame: ${E.message}")
-                false
-            }
+        override fun areItemsTheSame(oldItem: BaseNotes, newItem: BaseNotes): Boolean {
+            return if (oldItem is Notes && newItem is Notes) oldItem.id == newItem.id
+            // since other layout is only 1 item i.e empty icon or layout so there is nothing to refresh
+            else false
+        }
 
 
-        override fun areContentsTheSame(oldItem: BaseNotes, newItem: BaseNotes): Boolean =
-            try{
-                when (oldItem) {
-                    is Notes -> oldItem != newItem
-                    else -> false
-                }
-            }catch (E:Exception){
-                Log.d("TAG", "areContentsTheSame: ${E.message}")
-                false
-            }
+        override fun areContentsTheSame(oldItem: BaseNotes, newItem: BaseNotes): Boolean {
+            return if (oldItem is Notes && newItem is Notes) oldItem == newItem
+            // since other layout is only 1 item i.e empty icon or layout so there is nothing to refresh
+            else false
+        }
     }
 
 
@@ -166,6 +155,14 @@ class ItemAdapter(private val clickListener: OnClickListener) :
         }
     }
 
+}
+
+class NotesKeyProvider(private val adapter: ItemAdapter): ItemKeyProvider<Long>(SCOPE_CACHED) {
+    override fun getKey(position: Int): Long? = (adapter.currentList[position] as? Notes)?.id?.toLong()
+
+    override fun getPosition(key: Long): Int {
+        return adapter.currentList.indexOfFirst { (it as? Notes)?.id?.toLong() == key }
+    }
 }
 class NotesDetailLookUp(private val recyclerView: RecyclerView):ItemDetailsLookup<Long>(){
 
