@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.SelectionTracker.SelectionObserver
-import androidx.recyclerview.selection.StableIdKeyProvider
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -20,18 +19,21 @@ import com.example.notes.model.EmptyNotes
 import com.example.notes.model.Notes
 import com.example.notes.ui.adapter.ItemAdapter
 import com.example.notes.ui.adapter.NotesDetailLookUp
+import com.example.notes.ui.adapter.NotesKeyProvider
 import com.example.notes.ui.baseinterface.OnClickListener
 import com.example.notes.viewmodels.MyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ListFragment : Fragment(), OnClickListener{
-    private var tracker: SelectionTracker<Long>? = null
-    private val TAG = "ListFragment"
+
+    companion object {
+        const val TAG = "ListFragment"
+    }
     private var actionMode: ActionMode? = null
     private var keyList: MutableList<Int> = mutableListOf()
     private val viewModel: MyViewModel by activityViewModels()
-    private val binding: FragmentListBinding by lazy{ FragmentListBinding.inflate(layoutInflater) }
+    private lateinit var binding: FragmentListBinding
     private lateinit var itemAdapter: ItemAdapter
 
     private fun initTracker(): SelectionTracker<Long>? {
@@ -40,7 +42,7 @@ class ListFragment : Fragment(), OnClickListener{
             SelectionTracker.Builder(
                 "selection-id",
                 rv,
-                StableIdKeyProvider(rv),
+                NotesKeyProvider(itemAdapter),
                 NotesDetailLookUp(rv),
                 StorageStrategy.createLongStorage()
             ).withSelectionPredicate(SelectionPredicates.createSelectAnything()).build()
@@ -49,6 +51,7 @@ class ListFragment : Fragment(), OnClickListener{
             null
         }
     }
+
     inner class ListSelectionObserver: SelectionObserver<Long>() {
         init{
             Log.d("TAG", "onItemStateChanged: ${hashCode()}")
@@ -57,14 +60,14 @@ class ListFragment : Fragment(), OnClickListener{
             try{
                 if (selected) {
                     keyList.add(key.toInt())
-                    if (tracker?.selection?.isEmpty != true) {
+                    if (itemAdapter.selectionTracker?.selection?.isEmpty != true) {
                         if (actionMode == null) {
                             actionMode = activity?.startActionMode(callback)
                         }
                     }
                 } else {
                     keyList.remove(key.toInt())
-                    if (tracker?.selection?.isEmpty == true) {
+                    if (itemAdapter.selectionTracker?.selection?.isEmpty == true) {
                         actionMode?.finish()
                     }
                 }
@@ -79,13 +82,15 @@ class ListFragment : Fragment(), OnClickListener{
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentListBinding.inflate(inflater, container, false)
         itemAdapter = ItemAdapter(this)
         binding.listOfAffirmations.adapter = itemAdapter
+        itemAdapter.selectionTracker = initTracker()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        selectionTracker()
+
         viewModel.getData().observe(viewLifecycleOwner) {
             if(it.isNotEmpty()){
                 if (it.size == 1) {
@@ -105,16 +110,8 @@ class ListFragment : Fragment(), OnClickListener{
         binding.addButton.setOnClickListener {
             findNavController().navigate(ListFragmentDirections.actionListFragmentToAddFragment())
         }
-        tracker?.addObserver(ListSelectionObserver())
+        itemAdapter.selectionTracker?.addObserver(ListSelectionObserver())
     }
-
-    private fun selectionTracker() {
-        Log.d("TAG", "selectionTracker: $tracker ${tracker.hashCode()}")
-        tracker = tracker ?: initTracker()
-        itemAdapter.selectionTracker = tracker
-    }
-
-
 
     override fun onItemClickListener(item: Notes) {
 
@@ -167,7 +164,7 @@ class ListFragment : Fragment(), OnClickListener{
             Log.d(TAG, "onDestroyActionMode: ")
             binding.addButton.visibility = View.VISIBLE
             keyList.clear()
-            tracker?.clearSelection()
+            itemAdapter.selectionTracker?.clearSelection()
             actionMode = null
         }
     }
