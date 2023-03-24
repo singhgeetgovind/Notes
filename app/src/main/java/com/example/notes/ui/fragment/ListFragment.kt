@@ -27,7 +27,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ListFragment : Fragment(), OnClickListener{
 
-    private val TAG = "ListFragment"
+    companion object {
+        const val TAG = "ListFragment"
+    }
     private var actionMode: ActionMode? = null
     private var keyList: MutableList<Int> = mutableListOf()
     private val viewModel: MyViewModel by activityViewModels()
