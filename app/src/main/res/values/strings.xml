@@ -16,4 +16,5 @@
     <string name="emptyMessage">Hey!! Look &#128064; there is an empty space,Let\'s fill it.</string>
     <string name="emptyNotesMessage">No Notes</string>
     <string name="add_button">Add Button</string>
+    <string name="time">Time</string>
 </resources>

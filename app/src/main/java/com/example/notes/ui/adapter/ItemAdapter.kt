@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.ItemKeyProvider
 import androidx.recyclerview.selection.SelectionTracker
@@ -43,7 +42,7 @@ class ItemAdapter(private val clickListener: OnClickListener) :
 
 
         override fun areContentsTheSame(oldItem: BaseNotes, newItem: BaseNotes): Boolean {
-            return if (oldItem is Notes && newItem is Notes) oldItem == newItem
+            return if (oldItem is Notes && newItem is Notes) oldItem.description != newItem.description
             // since other layout is only 1 item i.e empty icon or layout so there is nothing to refresh
             else false
         }
@@ -69,7 +68,6 @@ class ItemAdapter(private val clickListener: OnClickListener) :
             (holder as ItemHolder)
             if(item is Notes) {
                 try{
-                        if(position==0)Toast.makeText(holder.itemView.context, "$selectionTracker", Toast.LENGTH_SHORT).show()
                     selectionTracker?.let{
                         holder.bind(item, it.isSelected(item.id.toLong()))
                     }
@@ -87,7 +85,7 @@ class ItemAdapter(private val clickListener: OnClickListener) :
     inner class ItemHolder(private val binding: ListItemBinding) : ViewHolder(binding.root) {
         @SuppressLint("SimpleDateFormat")
 
-        private val simpleDateFormat = SimpleDateFormat("dd MMM, hh:mm a")
+        private val simpleDateFormat = SimpleDateFormat("dd MMM,hh:mm a")
 
         fun bind(notes: Notes,isChecked:Boolean = false) = with(binding){
                 Log.d(TAG, "bind: $isChecked $absoluteAdapterPosition")

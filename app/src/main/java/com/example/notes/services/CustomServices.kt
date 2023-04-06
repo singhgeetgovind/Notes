@@ -14,7 +14,7 @@ import androidx.core.app.JobIntentService.enqueueWork
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.notes.R
-import com.example.notes.receiver.CustomBroadcastReceiver
+import com.example.notes.receiver.AlarmBroadcastReceiver
 import com.example.notes.ui.activity.MainActivity
 import kotlin.concurrent.thread
 
@@ -42,7 +42,7 @@ class CustomServices : JobService() {
     private fun notification() {
         val intent = Intent(this,MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this,0,intent,0)
-        val broadcastIntent = Intent(this,CustomBroadcastReceiver::class.java)
+        val broadcastIntent = Intent(this,AlarmBroadcastReceiver::class.java)
         val broadcastPendingIntent = PendingIntent.getBroadcast(this,0,broadcastIntent,0)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(

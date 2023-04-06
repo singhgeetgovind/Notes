@@ -170,13 +170,5 @@ class ListFragment : Fragment(), OnClickListener{
     }
 
 
-/*    override fun onDestroyView() {
-        keyList.clear()
-        tracker?.clearSelection()
-        itemAdapter.selectionTracker?.clearSelection()
-        actionMode=null
-        super.onDestroyView()
-    }*/
-
 }
 

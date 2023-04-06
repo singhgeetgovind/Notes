@@ -12,10 +12,10 @@
             android:id="@+id/topMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="Update"
+            android:elevation="0dp"
             app:titleCentered="true"
             app:menu="@menu/top_menu"
-            style="@style/Custom.ToolBar"
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
             />
     </com.google.android.material.appbar.AppBarLayout>
     <LinearLayout

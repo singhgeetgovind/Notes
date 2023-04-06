@@ -27,18 +27,20 @@ const val TAG: String = "MainActivity"
 class MainActivity : AppCompatActivity() {
     private var isNightMode: Int =1
     private lateinit var sharedPreferences: SharedPreferences
-    private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private lateinit var binding: ActivityMainBinding
     lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         sharedPreferences = getSharedPreferences("Theme", MODE_PRIVATE)
         isNightMode = sharedPreferences.getInt("Dark mode", 0)
-        when (isNightMode) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        /*when (isNightMode) {
             AppCompatDelegate.MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
@@ -46,13 +48,12 @@ class MainActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
             else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        }
-//        notification() //Call Notification
+        }*/
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = navHostFragment.findNavController()
-//        appBarConfiguration = AppBarConfiguration(setOf(R.id.listFragment, R.id.apiListFragment))
-//        setupActionBarWithNavController(navController, appBarConfiguration)
+        /*appBarConfiguration = AppBarConfiguration(setOf(R.id.listFragment, R.id.apiListFragment))
+        setupActionBarWithNavController(navController, appBarConfiguration)*/
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

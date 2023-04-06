@@ -5,13 +5,15 @@ import android.os.Bundle
 import android.view.*
 import android.widget.RadioGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.notes.R
 import com.example.notes.databinding.FragmentUpdateBinding
 import com.example.notes.model.Notes
+import com.example.notes.services.alarm
+import com.example.notes.utils.Utils.getInMilliSecond
 import com.example.notes.viewmodels.MyViewModel
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -19,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 @AndroidEntryPoint
-class UpdateFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
+class UpdateFragment : DialogFragment(), RadioGroup.OnCheckedChangeListener {
     private lateinit var dateFloatButton: FloatingActionButton
     private lateinit var timeFloatButton: FloatingActionButton
     private lateinit var cancelAlarmButton: FloatingActionButton
@@ -57,60 +59,36 @@ class UpdateFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
         isActive = args.isActive
         checkArgs(isActive)
 
-        /*binding.upPriorityGrp.setOnCheckedChangeListener(this)
-        addExtendFloatButton.shrink()
-
-        addExtendFloatButton.setOnClickListener {
-            showButton()
-        }
-        dateFloatButton.setOnClickListener {
-            scheduleDate(it)
-        }
-        timeFloatButton.setOnClickListener {
-            scheduleTime(it)
-        }
-        cancelAlarmButton.setOnClickListener {
-            alarm(false, activity)
-        }*/
         binding.topMenu.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.saveButton -> {
                     onClick()
                     true
                 }
+                R.id.dateButton->{
+                    scheduleDate()
+                    true
+                }
+                R.id.timeButton->{
+                    scheduleTime()
+                    true
+                }
                 else-> false
             }
         }
+        binding.topMenu.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
-    private fun scheduleDate(view: View) {
+    private fun scheduleDate() {
         customDatePickerDialogFragment.show(requireActivity().supportFragmentManager, "Calendar")
     }
 
-    private fun scheduleTime(view: View) {
+    private fun scheduleTime() {
         customTimePickerDialogFragment.show(requireActivity().supportFragmentManager, "Time")
     }
 
-    private fun showButton() {
-        if (!isAllFabAvailable) {
-            addExtendFloatButton.extend()
-            dateFloatButton.show()
-            timeFloatButton.show()
-            dateFloatButton.visibility = View.VISIBLE
-            timeFloatButton.visibility = View.VISIBLE
-            cancelAlarmButton.visibility = View.VISIBLE
-            isAllFabAvailable = true
-        } else {
-            addExtendFloatButton.shrink()
-            dateFloatButton.hide()
-            timeFloatButton.hide()
-            dateFloatButton.visibility = View.INVISIBLE
-            timeFloatButton.visibility = View.INVISIBLE
-            cancelAlarmButton.visibility = View.INVISIBLE
-            isAllFabAvailable = false
-
-        }
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.top_menu, menu)
@@ -152,6 +130,8 @@ class UpdateFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
             if (description.isNullOrEmpty()) {
                 Toast.makeText(requireContext(), "Enter Description", Toast.LENGTH_SHORT).show()
             } else {
+                val date = getInMilliSecond(customDatePickerDialogFragment.getDate(),
+                    customTimePickerDialogFragment.getHour(),customTimePickerDialogFragment.getMinute())
                 myViewModel.updateData(
                     Notes(
                         id = args.id,
@@ -159,11 +139,10 @@ class UpdateFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
                         description = description.toString(),
                         hasPriority = isActive,
                         date = Date(System.currentTimeMillis()),
-                        eventDate = Date(getInMilliSecond())
+                        eventDate = Date(date)
                     )
                 )
-//                alarm(true, requireActivity(), title.toString(), description.toString(), getInMilliSecond())
-                Toast.makeText(context, "Data Updated", Toast.LENGTH_SHORT).show()
+                if(date.toString().isNotBlank()) alarm(true, requireContext(), title.toString(), description.toString(), date)
                 findNavController().popBackStack()
             }
         } else {
@@ -185,23 +164,6 @@ class UpdateFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
                 isActive = 1
                 return
             }
-        }
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private fun getInMilliSecond(): Long {
-        val calendar = customDatePickerDialogFragment.getDate()
-        calendar.set(Calendar.HOUR, customTimePickerDialogFragment.getHour())
-        calendar.set(Calendar.MINUTE, customTimePickerDialogFragment.getMinute())
-        calendar.set(Calendar.SECOND, 0)
-
-        if (calendar.before(Calendar.getInstance())) {
-            calendar.add(Calendar.DATE, 1)
-        }
-        return if (calendar.timeInMillis < 0) {
-            args.date
-        } else {
-            calendar.timeInMillis
         }
     }
 }

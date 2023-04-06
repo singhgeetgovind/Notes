@@ -20,6 +20,9 @@
             app:popExitAnim="@android:anim/slide_out_right"
             app:popUpTo="@id/listFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_addFragment_to_toolsLayoutBottomSheet"
+            app:destination="@id/toolsLayoutBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/listFragment"
@@ -76,10 +79,17 @@
         <argument
             android:name="isActive"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_updateFragment_to_toolsLayoutBottomSheet"
+            app:destination="@id/toolsLayoutBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/apiListFragment"
         android:name="com.example.notes.ui.fragment.SettingFragment"
         android:label="Api Data"
         tools:layout="@layout/fragment_setting" />
+    <dialog
+        android:id="@+id/toolsLayoutBottomSheet"
+        android:name="com.example.notes.ui.fragment.ToolsLayoutBottomSheet"
+        android:label="ToolsLayoutBottomSheet" />
 </navigation>

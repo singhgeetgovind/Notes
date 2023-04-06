@@ -35,7 +35,10 @@
             android:name="com.example.notes.services.CustomServices"
             android:permission="android.permission.BIND_JOB_SERVICE"
             />
-        <receiver android:name="com.example.notes.receiver.CustomBroadcastReceiver"/>
+        <receiver android:name="com.example.notes.receiver.AlarmBroadcastReceiver"/>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
     </application>
 

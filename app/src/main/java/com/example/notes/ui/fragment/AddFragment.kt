@@ -15,6 +15,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.notes.R
 import com.example.notes.databinding.FragmentAddBinding
 import com.example.notes.model.Notes
+import com.example.notes.services.alarm
+import com.example.notes.utils.Utils.getInMilliSecond
 import com.example.notes.viewmodels.MyViewModel
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -61,11 +63,21 @@ class AddFragment : DialogFragment(),MenuProvider {
             when(it.itemId) {
                 R.id.saveButton -> {
                     onClick()
-                    dismiss()
+                    true
+                }
+                R.id.dateButton->{
+                    scheduleDate()
+                    true
+                }
+                R.id.timeButton->{
+                    scheduleTime()
                     true
                 }
                 else-> false
             }
+        }
+        binding.topMenu.setNavigationOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
@@ -79,6 +91,9 @@ class AddFragment : DialogFragment(),MenuProvider {
             if (description.isNullOrEmpty()) {
                 Toast.makeText(requireContext(), "Enter Description", Toast.LENGTH_SHORT).show()
             } else {
+                val date = getInMilliSecond(customDatePickerDialogFragment.getDate(),
+                    customTimePickerDialogFragment.getHour(),
+                    customTimePickerDialogFragment.getMinute())
                 myViewModel.addData(
                     Notes(
                         0,
@@ -86,11 +101,10 @@ class AddFragment : DialogFragment(),MenuProvider {
                         description = description.toString(),
                         hasPriority = isActive,
                         date = Date(System.currentTimeMillis()),
-                        eventDate = Date(getInMilliSecond())
+                        eventDate = Date(date)
                     )
                 )
-//                alarm(true,requireActivity(), title.toString(),description.toString(),getInMilliSecond())
-                Toast.makeText(context,"Data added",Toast.LENGTH_SHORT).show()
+                if(date.toString().isNotBlank()) alarm(true,requireContext(), title.toString(),description.toString(),date)
                 findNavController().popBackStack()
             }
         } else {
@@ -98,27 +112,14 @@ class AddFragment : DialogFragment(),MenuProvider {
         }
     }
 
-    private fun scheduleDate(view: View) {
+    private fun scheduleDate() {
         customDatePickerDialogFragment.show(requireActivity().supportFragmentManager, "Calendar")
     }
 
-    private fun scheduleTime(view: View) {
+    private fun scheduleTime() {
         customTimePickerDialogFragment.show(requireActivity().supportFragmentManager, "Time")
     }
 
-
-    @SuppressLint("SimpleDateFormat")
-    private fun getInMilliSecond(): Long {
-        val calendar = customDatePickerDialogFragment.getDate()
-        calendar.set(Calendar.HOUR, customTimePickerDialogFragment.getHour())
-        calendar.set(Calendar.MINUTE, customTimePickerDialogFragment.getMinute())
-        calendar.set(Calendar.SECOND, 0)
-
-        if(calendar.before(Calendar.getInstance()) ){
-            calendar.add(Calendar.DATE,1)
-        }
-        return calendar.timeInMillis
-    }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         Toast.makeText(requireContext(), "menu", Toast.LENGTH_SHORT).show()
