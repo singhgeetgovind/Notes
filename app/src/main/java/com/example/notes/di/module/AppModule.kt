@@ -2,22 +2,17 @@ package com.example.notes.di.module
 
 
 import android.app.Application
-
 import androidx.room.Room
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.notes.dao.NotesDao
+import com.example.notes.database.DataBaseMigration
 import com.example.notes.database.NotesDatabase
 import com.example.notes.repository.Repository
 import com.example.notes.retrofit.MyRetrofitBuilder
 import com.example.notes.retrofit.RetrofitApi
-
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-
-
 import javax.inject.Singleton
 
 @Module
@@ -32,7 +27,7 @@ object AppModule {
             NotesDatabase::class.java,
             "NotesDatabase"
         )
-            .fallbackToDestructiveMigration()
+            .addMigrations(*DataBaseMigration)
             .build()
 
     @Singleton

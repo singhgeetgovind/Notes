@@ -43,7 +43,7 @@ class CustomDatePickerDialog: DialogFragment(),DatePickerDialog.OnDateSetListene
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, month)
             cal.set(Calendar.DAY_OF_MONTH, day)
-            Log.d(TAG,"getDate: ${
+            Log.d(TAG,"getCreatedDate: ${
                 SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH).format(cal.timeInMillis)}")
             cal
         }

@@ -19,7 +19,7 @@ fun alarm(trigger: Boolean, activity: Context?, title:String="", description: St
     broadcastIntent.putExtra("Description", description)
     val broadcastPendingIntent = PendingIntent.getBroadcast(
         activity,
-        1,
+        0,
         broadcastIntent,
         0
     )

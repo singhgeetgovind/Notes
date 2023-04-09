@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.*
 import android.os.Build
 import android.os.Bundle
+import android.text.util.Linkify
 import android.view.*
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -21,11 +22,13 @@ import com.example.notes.viewmodels.MyViewModel
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
+import me.saket.bettermovementmethod.BetterLinkMovementMethod
 import java.util.*
 
 @AndroidEntryPoint
-class AddFragment : DialogFragment(),MenuProvider {
+class AddFragment : DialogFragment(),MenuProvider,BetterLinkMovementMethod.OnLinkClickListener {
 
+    private lateinit var betterLinkMovementMethod: BetterLinkMovementMethod
     private val binding: FragmentAddBinding by lazy { FragmentAddBinding.inflate(layoutInflater) }
     private val myViewModel: MyViewModel by activityViewModels()
     private var isActive = -1
@@ -52,32 +55,36 @@ class AddFragment : DialogFragment(),MenuProvider {
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        addExtendFloatButton = binding.add
-        dateFloatButton = binding.scheduleDate
-        timeFloatButton = binding.scheduleTime
-        cancelAlarmButton = binding.cancelAlarm
-
+        betterLinkMovementMethod = BetterLinkMovementMethod.newInstance()
 //        activity?.addMenuProvider(this)
 
-        binding.topMenu.setOnMenuItemClickListener {
-            when(it.itemId) {
-                R.id.saveButton -> {
-                    onClick()
-                    true
+        with(binding){
+            topMenu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.saveButton -> {
+                        onClick()
+                        true
+                    }
+                    R.id.dateButton -> {
+                        scheduleDate()
+                        true
+                    }
+                    R.id.timeButton -> {
+                        scheduleTime()
+                        true
+                    }
+                    else -> false
                 }
-                R.id.dateButton->{
-                    scheduleDate()
-                    true
-                }
-                R.id.timeButton->{
-                    scheduleTime()
-                    true
-                }
-                else-> false
             }
-        }
-        binding.topMenu.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            topMenu.setNavigationOnClickListener {
+                findNavController().popBackStack()
+            }
+            description.apply {
+                linksClickable = true
+                isClickable = true
+                movementMethod = betterLinkMovementMethod
+                Linkify.addLinks(this, Linkify.WEB_URLS or Linkify.EMAIL_ADDRESSES)
+            }
         }
     }
 
@@ -100,7 +107,7 @@ class AddFragment : DialogFragment(),MenuProvider {
                         title = title.toString(),
                         description = description.toString(),
                         hasPriority = isActive,
-                        date = Date(System.currentTimeMillis()),
+                        createdDate = Date(System.currentTimeMillis()),
                         eventDate = Date(date)
                     )
                 )
@@ -135,6 +142,10 @@ class AddFragment : DialogFragment(),MenuProvider {
             }
             else -> false
         }
+    }
+
+    override fun onClick(textView: TextView?, url: String?): Boolean {
+        return false
     }
 
 }

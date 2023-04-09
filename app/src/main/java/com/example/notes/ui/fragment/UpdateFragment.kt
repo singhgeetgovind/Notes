@@ -2,8 +2,10 @@ package com.example.notes.ui.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.util.Linkify
 import android.view.*
 import android.widget.RadioGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -18,10 +20,12 @@ import com.example.notes.viewmodels.MyViewModel
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
+import me.saket.bettermovementmethod.BetterLinkMovementMethod
 import java.util.*
 
 @AndroidEntryPoint
-class UpdateFragment : DialogFragment(), RadioGroup.OnCheckedChangeListener {
+class UpdateFragment : DialogFragment(), RadioGroup.OnCheckedChangeListener,BetterLinkMovementMethod.OnLinkClickListener {
+    private lateinit var betterLinkMovementMethod: BetterLinkMovementMethod
     private lateinit var dateFloatButton: FloatingActionButton
     private lateinit var timeFloatButton: FloatingActionButton
     private lateinit var cancelAlarmButton: FloatingActionButton
@@ -50,10 +54,7 @@ class UpdateFragment : DialogFragment(), RadioGroup.OnCheckedChangeListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         customDatePickerDialogFragment = CustomDatePickerDialog()
         customTimePickerDialogFragment = CustomTimePickerDialog()
-        addExtendFloatButton = binding.update
-        dateFloatButton = binding.scheduleDate
-        timeFloatButton = binding.scheduleTime
-        cancelAlarmButton = binding.cancelAlarm
+        betterLinkMovementMethod = BetterLinkMovementMethod.newInstance()
         binding.upTitle.setText(args.name)
         binding.upDescription.setText(args.description)
         isActive = args.isActive
@@ -79,6 +80,13 @@ class UpdateFragment : DialogFragment(), RadioGroup.OnCheckedChangeListener {
         binding.topMenu.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
+        binding.upDescription.apply {
+            linksClickable = true
+            isClickable = true
+            movementMethod = betterLinkMovementMethod
+            Linkify.addLinks(this, Linkify.WEB_URLS or Linkify.EMAIL_ADDRESSES)
+        }
+
     }
 
     private fun scheduleDate() {
@@ -138,7 +146,7 @@ class UpdateFragment : DialogFragment(), RadioGroup.OnCheckedChangeListener {
                         title = title.toString(),
                         description = description.toString(),
                         hasPriority = isActive,
-                        date = Date(System.currentTimeMillis()),
+                        createdDate = Date(System.currentTimeMillis()),
                         eventDate = Date(date)
                     )
                 )
@@ -165,6 +173,10 @@ class UpdateFragment : DialogFragment(), RadioGroup.OnCheckedChangeListener {
                 return
             }
         }
+    }
+
+    override fun onClick(textView: TextView?, url: String?): Boolean {
+        return false
     }
 }
 

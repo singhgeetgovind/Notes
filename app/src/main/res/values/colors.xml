@@ -20,5 +20,6 @@
     <color name="chipBgColor">#CDFBCE</color>
     <color name="chipStrokeColor">#4CAF50</color>
     <color name="cardBgColor">#2AE4E4E4</color>
-    <color name="listBgColor">#ECEFF1</color>
+    <color name="listBgColor">#65ECEFF1</color>
+    <color name="greyedOut">#5C5C5C</color>
 </resources>
