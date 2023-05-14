@@ -10,31 +10,42 @@ import com.example.notes.receiver.AlarmBroadcastReceiver
 import com.example.notes.utils.Constants
 
 
-fun alarm(trigger: Boolean, activity: Context?, title:String="", description: String="",getInMilliSecond:Long=0) {
+fun scheduleEvent( context: Context?, title:String="", description: String="",getInMilliSecond:Long=0,requestCode: Int = 0) {
 
-    val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    val broadcastIntent = Intent(activity, AlarmBroadcastReceiver::class.java)
+    val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    val broadcastIntent = Intent(context, AlarmBroadcastReceiver::class.java)
     broadcastIntent.action = Constants.ALARM_ACTIONS
-    broadcastIntent.putExtra("Title", title)
-    broadcastIntent.putExtra("Description", description)
+    broadcastIntent.apply{
+        putExtra("IntentId", requestCode)
+        putExtra("Title", title)
+        putExtra("Description", description)
+    }
     val broadcastPendingIntent = PendingIntent.getBroadcast(
-        activity,
-        0,
+        context,
+        requestCode,
         broadcastIntent,
         0
     )
-    if (trigger) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                getInMilliSecond,broadcastPendingIntent)
-        }else{
-            alarmManager.setExact(
-                AlarmManager.RTC_WAKEUP,
-                getInMilliSecond,broadcastPendingIntent)
-        }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, getInMilliSecond,broadcastPendingIntent)
+    } else {
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, getInMilliSecond,broadcastPendingIntent)
     }
-    else {
-        alarmManager.cancel(broadcastPendingIntent)
+}
+fun cancelAlarm(context: Context?,requestCode: Int){
+    val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    val broadcastIntent = Intent(context, AlarmBroadcastReceiver::class.java)
+    broadcastIntent.action = Constants.ALARM_ACTIONS
+    broadcastIntent.apply{
+        putExtra("IntentId", requestCode)
+        putExtra("Title", "title")
+        putExtra("Description", "description")
     }
+    val broadcastPendingIntent = PendingIntent.getBroadcast(
+        context,
+        requestCode,
+        broadcastIntent,
+        PendingIntent.FLAG_NO_CREATE
+    )
+    alarmManager.cancel(broadcastPendingIntent)
 }

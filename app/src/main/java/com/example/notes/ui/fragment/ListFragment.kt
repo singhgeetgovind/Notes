@@ -17,12 +17,16 @@ import com.example.notes.R
 import com.example.notes.databinding.FragmentListBinding
 import com.example.notes.model.EmptyNotes
 import com.example.notes.model.Notes
+import com.example.notes.services.cancelAlarm
 import com.example.notes.ui.adapter.ItemAdapter
 import com.example.notes.ui.adapter.NotesDetailLookUp
 import com.example.notes.ui.adapter.NotesKeyProvider
 import com.example.notes.ui.baseinterface.OnClickListener
 import com.example.notes.viewmodels.MyViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ListFragment : Fragment(), OnClickListener{
@@ -115,13 +119,7 @@ class ListFragment : Fragment(), OnClickListener{
 
     override fun onItemClickListener(item: Notes) {
 
-        val action = ListFragmentDirections.actionListFragmentToUpdateFragment(
-            id = item.id,
-            name = item.title,
-            description = item.description,
-            isActive = item.hasPriority,
-            date = item.eventDate.time
-        )
+        val action = ListFragmentDirections.actionListFragmentToUpdateFragment(item)
         findNavController().navigate(action)
     }
 
@@ -151,6 +149,17 @@ class ListFragment : Fragment(), OnClickListener{
                     itemAdapter.selectionTracker?.hasSelection()?.run {
                         if(this){
                             viewModel.deleteData(keyList.toList())
+                            CoroutineScope(Dispatchers.Main).launch{
+                                keyList.forEach { item ->
+                                    val intentId =
+                                        (itemAdapter.currentList as List<Notes>).filter { it.id == item && it.eventDate != null }
+                                    Log.d(TAG, "onActionItemClicked: $intentId")
+                                    if (intentId.isNotEmpty()) {
+                                        Log.d(TAG, "onActionItemClicked:if $intentId")
+                                        intentId.first().intentId?.let { cancelAlarm(context, it) }
+                                    }
+                                }
+                            }
                             actionMode?.finish()
                         }
                     }

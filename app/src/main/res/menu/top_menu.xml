@@ -13,7 +13,7 @@
         android:title="@string/time" />
     <item
         android:id="@+id/saveButton"
-        android:icon="@drawable/baseline_check_24"
+        android:icon="@drawable/save_enable_disable_state"
         app:showAsAction="always"
         android:title="@string/save" />
 </menu>

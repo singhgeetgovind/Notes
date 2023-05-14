@@ -6,12 +6,12 @@ import java.util.*
 class OwnConvertor {
 
     @TypeConverter
-    fun dateToLong(date: Date) : Long{
-        return date.time
+    fun dateToLong(date: Date?) : Long?{
+        return date?.time
     }
     @TypeConverter
-    fun longToDate(long: Long) : Date{
-        return Date(long)
+    fun longToDate(long: Long?) : Date{
+        return Date(long?:0L)
     }
 
     @TypeConverter

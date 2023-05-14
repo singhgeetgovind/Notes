@@ -15,8 +15,20 @@
             android:layout_height="wrap_content"
             android:elevation="0dp"
             app:menu="@menu/top_menu"
-            app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-            app:titleCentered="true" />
+            app:titleCentered="true" >
+        <com.google.android.material.chip.Chip
+            android:id="@+id/scheduledTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="14 Mar 23,19:56 am"
+            tools:visibility="visible"
+            android:visibility="gone"
+            app:chipIcon="@drawable/baseline_alarm_24"
+            app:closeIcon="@drawable/baseline_close_24"
+            app:closeIconEnabled="true"
+            style="@style/Widget.Chip.Action"
+            />
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
 <ScrollView

@@ -19,5 +19,11 @@
         <item name="actionModeStyle">@style/Custom.ActionMode</item>
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
     </style>
-
+    <style name="Widget.Chip.Action" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="fontFamily">@font/archivo_semibold</item>
+        <item name="chipIconTint">@color/primaryColor</item>
+        <item name="closeIconTint">@color/primaryColor</item>
+        <item name="android:textSize">12sp</item>
+        <item name="closeIconSize">24sp</item>
+    </style>
 </resources>

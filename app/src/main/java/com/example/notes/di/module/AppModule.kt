@@ -4,7 +4,7 @@ package com.example.notes.di.module
 import android.app.Application
 import androidx.room.Room
 import com.example.notes.dao.NotesDao
-import com.example.notes.database.DataBaseMigration
+import com.example.notes.database.Migration
 import com.example.notes.database.NotesDatabase
 import com.example.notes.repository.Repository
 import com.example.notes.retrofit.MyRetrofitBuilder
@@ -27,7 +27,7 @@ object AppModule {
             NotesDatabase::class.java,
             "NotesDatabase"
         )
-            .addMigrations(*DataBaseMigration)
+            .addMigrations(*Migration.DataBaseMigration)
             .build()
 
     @Singleton

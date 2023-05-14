@@ -1,6 +1,5 @@
 package com.example.notes.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +16,6 @@ class MyViewModel @Inject constructor(private val repository: Repository) : View
     private val TAG = "MyViewModel"
 
     fun getData(): LiveData<List<Notes>> {
-        Log.e(TAG, "getData: ")
         return repository.getData()
     }
 

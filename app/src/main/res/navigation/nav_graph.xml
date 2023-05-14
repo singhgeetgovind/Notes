@@ -57,31 +57,21 @@
         android:name="com.example.notes.ui.fragment.UpdateFragment"
         android:label="Update"
         tools:layout="@layout/fragment_update">
-        <argument
-            android:name="name"
-            app:argType="string" />
-        <argument
-            android:name="description"
-            app:argType="string" />
-        <argument
-            android:name="id"
-            app:argType="integer" />
-        <argument
-            android:name="date"
-            app:argType="long"
-            android:defaultValue="0L" />
+
         <action
             android:id="@+id/action_updateFragment_to_listFragment"
             app:destination="@id/listFragment"
             app:launchSingleTop="false"
             app:popUpTo="@id/listFragment"
             app:popUpToInclusive="true" />
-        <argument
-            android:name="isActive"
-            app:argType="integer" />
         <action
             android:id="@+id/action_updateFragment_to_toolsLayoutBottomSheet"
             app:destination="@id/toolsLayoutBottomSheet" />
+        <argument
+            android:name="parcelable_notes"
+            app:argType="com.example.notes.model.Notes"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/apiListFragment"

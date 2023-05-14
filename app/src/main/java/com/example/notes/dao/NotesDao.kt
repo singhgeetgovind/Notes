@@ -22,4 +22,7 @@ interface NotesDao {
 
     @Update
     suspend fun updateData(notes: Notes)
+
+    @Query("UPDATE Notes set EventDone = 1 where IntentId=:intentId")
+    suspend fun updateEventTrigger(intentId:Int)
 }

@@ -10,6 +10,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -19,7 +20,7 @@ import com.example.notes.utils.Constants
 import java.util.*
 
 class AlarmBroadcastReceiver : BroadcastReceiver() {
-
+    private val TAG = "AlarmBroadcastReceiver"
     @SuppressLint("UnspecifiedImmutableFlag")
     override fun onReceive(context: Context?, intent: Intent?) {
         if(intent?.action==Constants.ALARM_ACTIONS){
@@ -31,9 +32,11 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
         val newIntent = Intent(context,MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
+        val intentId= intent?.getIntExtra("IntentId",0) ?: 0
         val title= intent?.getStringExtra("Title")
         val description= intent?.getStringExtra("Description")
-        val pendingIntent = PendingIntent.getActivity(context,5,newIntent,PendingIntent.FLAG_UPDATE_CURRENT)
+        Log.d(TAG, "createNotification: $intentId")
+        val pendingIntent = PendingIntent.getActivity(context,intentId,newIntent,PendingIntent.FLAG_UPDATE_CURRENT)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
                 Constants.CHANNEL_ID_REMINDERS,
@@ -48,7 +51,7 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
 
         }
         val notification = NotificationCompat.Builder(context!!, Constants.CHANNEL_ID_REMINDERS).run{
-            setSmallIcon(R.drawable.note)
+            setSmallIcon(R.drawable.ic_baseline_task_alt_24)
             setContentTitle(title)
             setContentText(description)
             setStyle(NotificationCompat.BigTextStyle())
@@ -66,6 +69,6 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
             }
             notify(Random().nextInt(), notification.build())
         }
-
+//        CoroutineScope(Dispatchers.IO).launch{ notesDao.updateEventTrigger(IntentId) }
     }
 }

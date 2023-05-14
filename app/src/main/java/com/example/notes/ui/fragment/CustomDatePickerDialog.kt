@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat
 
 import java.util.*
 
-class CustomDatePickerDialog: DialogFragment(),DatePickerDialog.OnDateSetListener{
+class CustomDatePickerDialog(private val dateCallBack: DateCallBack): DialogFragment(),DatePickerDialog.OnDateSetListener{
     private  val TAG = "CustomDatePickerDialog"
     private var year=0
     private var month=0
@@ -34,6 +34,7 @@ class CustomDatePickerDialog: DialogFragment(),DatePickerDialog.OnDateSetListene
         this.day=dayOfMonth
         this.year=year
         this.month =month
+        dateCallBack.dateClick(getDate())
     }
     fun getDate():Calendar{
         val cal=Calendar.getInstance()
@@ -47,5 +48,8 @@ class CustomDatePickerDialog: DialogFragment(),DatePickerDialog.OnDateSetListene
                 SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH).format(cal.timeInMillis)}")
             cal
         }
+    }
+    interface DateCallBack{
+        fun dateClick(calendar: Calendar)
     }
 }

@@ -88,10 +88,10 @@ class ItemAdapter(private val clickListener: OnClickListener) :
         private val simpleDateFormat = SimpleDateFormat("dd MMM,hh:mm a")
 
         fun bind(notes: Notes,isChecked:Boolean = false) = with(binding){
-                Log.d(TAG, "bind: $isChecked $absoluteAdapterPosition")
+//                Log.d(TAG, "bind: $isChecked $absoluteAdapterPosition")
                 notesTitle.text = notes.title
                 notesDescription.text = notes.description
-                eventDate.text=simpleDateFormat.format(notes.eventDate)
+                eventDate.text=simpleDateFormat.format(notes.createdDate)
                 itemChecked.visibility = if(isChecked) View.VISIBLE else View.GONE
                 itemView.setOnLongClickListener {
                     clickListener.onLongItemClickListener(notes, it,absoluteAdapterPosition)
