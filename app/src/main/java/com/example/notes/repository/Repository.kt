@@ -22,4 +22,7 @@ class Repository @Inject constructor(private val notesDao: NotesDao/*, private v
     suspend fun deleteAll(){
         notesDao.deleteAll()
     }
+    suspend fun updateEventTrigger(intentId:Int){
+        notesDao.updateEventTrigger(intentId)
+    }
 }

@@ -5,8 +5,8 @@ buildscript {
         lifecycle_version = "2.4.0-alpha03"
         arch_version = "2.1.0"
         nav_version = "2.5.3"
-        room_version = "2.3.0"
-        work_version = "2.6.0"
+        room_version = "2.5.1"
+        work_version = "2.8.1"
     }
     repositories {
         google()

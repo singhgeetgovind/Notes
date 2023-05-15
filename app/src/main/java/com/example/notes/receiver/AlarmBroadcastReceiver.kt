@@ -14,9 +14,12 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.notes.R
 import com.example.notes.ui.activity.MainActivity
 import com.example.notes.utils.Constants
+import com.example.notes.worker.AlarmWorker
 import java.util.*
 
 class AlarmBroadcastReceiver : BroadcastReceiver() {
@@ -25,6 +28,9 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if(intent?.action==Constants.ALARM_ACTIONS){
             createNotification(context, intent)
+            val workManager = WorkManager.getInstance(context!!)
+            val worker = OneTimeWorkRequestBuilder<AlarmWorker>()
+                        .build()
         }
     }
     @SuppressLint("UnspecifiedImmutableFlag")
