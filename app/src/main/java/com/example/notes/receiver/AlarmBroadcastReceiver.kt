@@ -28,9 +28,12 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if(intent?.action==Constants.ALARM_ACTIONS){
             createNotification(context, intent)
-            val workManager = WorkManager.getInstance(context!!)
-            val worker = OneTimeWorkRequestBuilder<AlarmWorker>()
-                        .build()
+            context?.let{
+                val workManager = WorkManager.getInstance(context)
+                val workerRequest = OneTimeWorkRequestBuilder<AlarmWorker>()
+                    .build()
+                workManager.enqueue(workerRequest)
+            }
         }
     }
     @SuppressLint("UnspecifiedImmutableFlag")

@@ -10,10 +10,10 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
 @HiltWorker
-class AlarmWorker@AssistedInject constructor(
+class AlarmWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
-    val repository: Repository) : CoroutineWorker(context,workerParameters) {
+    private val repository: Repository) : CoroutineWorker(context,workerParameters) {
     private val TAG = "AlarmWorker"
 
     override suspend fun doWork(): Result {
