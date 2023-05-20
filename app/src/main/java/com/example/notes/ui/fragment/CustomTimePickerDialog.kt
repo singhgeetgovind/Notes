@@ -18,7 +18,7 @@ class CustomTimePickerDialog(private val callBack: TimeCallBack) : DialogFragmen
     private fun setFormat(): Int {
         Log.d(TAG, "setFormat: ${System.currentTimeMillis().hours}")
         return when(System.currentTimeMillis().hours){
-            else-> 12
+            else-> 24
         }
 
     }

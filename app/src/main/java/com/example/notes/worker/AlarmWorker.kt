@@ -20,6 +20,7 @@ class AlarmWorker @AssistedInject constructor(
         return try {
             val intentId = inputData.getInt("IntentId",1)
             repository.updateEventTrigger(intentId)
+            Log.e(TAG, "doWork: success $intentId")
             Result.success()
         }catch (e:Exception){
             Log.e(TAG, "doWork: ${e.message}")

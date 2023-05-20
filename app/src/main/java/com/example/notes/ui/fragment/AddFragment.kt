@@ -159,7 +159,7 @@ class AddFragment : DialogFragment(), MenuProvider,BetterLinkMovementMethod.OnLi
             customTimePickerDialogFragment.getMinute())
         val formattedDate = SimpleDateFormat("EEE dd MMM,hh:mm a", Locale.ENGLISH).format(Date(date?:0L))
         binding.scheduledTime.text = formattedDate
-        Log.d(TAG, "dateClick: $date")
+        Log.d(TAG, "dateClick: ${customTimePickerDialogFragment.getHour()} ${customTimePickerDialogFragment.getMinute()}")
     }
 
     override fun timeClick(hours: Int?, minute: Int?) {
@@ -168,7 +168,7 @@ class AddFragment : DialogFragment(), MenuProvider,BetterLinkMovementMethod.OnLi
             minute?:customTimePickerDialogFragment.getMinute())
         val formattedDate = SimpleDateFormat("EEE dd MMM,hh:mm a", Locale.ENGLISH).format(Date(date?:0L))
         binding.scheduledTime.text = formattedDate
-        Log.d(TAG, "timeClick: $date")
+        Log.d(TAG, "timeClick: $date $formattedDate")
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {

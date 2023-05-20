@@ -70,6 +70,7 @@ class ListFragment : Fragment(), OnClickListener{
                         }
                     }
                 } else {
+                    Log.d(TAG, "onItemStateChanged: ")
                     keyList.remove(key.toInt())
                     if (itemAdapter.selectionTracker?.selection?.isEmpty == true) {
                         actionMode?.finish()
@@ -149,17 +150,7 @@ class ListFragment : Fragment(), OnClickListener{
                     itemAdapter.selectionTracker?.hasSelection()?.run {
                         if(this){
                             viewModel.deleteData(keyList.toList())
-                            CoroutineScope(Dispatchers.Main).launch{
-                                keyList.forEach { item ->
-                                    val intentId =
-                                        (itemAdapter.currentList as List<Notes>).filter { it.id == item && it.eventDate != null }
-                                    Log.d(TAG, "onActionItemClicked: $intentId")
-                                    if (intentId.isNotEmpty()) {
-                                        Log.d(TAG, "onActionItemClicked:if $intentId")
-                                        intentId.first().intentId?.let { cancelAlarm(context, it) }
-                                    }
-                                }
-                            }
+                            cancelOutReminder(keyList,itemAdapter.currentList as List<Notes>)
                             actionMode?.finish()
                         }
                     }
@@ -172,9 +163,22 @@ class ListFragment : Fragment(), OnClickListener{
         override fun onDestroyActionMode(p0: ActionMode?) {
             Log.d(TAG, "onDestroyActionMode: ")
             binding.addButton.visibility = View.VISIBLE
-            keyList.clear()
-            itemAdapter.selectionTracker?.clearSelection()
             actionMode = null
+        }
+    }
+
+    private fun cancelOutReminder(key:List<Int>,notesList:List<Notes>) {
+        val itemList:List<Notes> = notesList
+        CoroutineScope(Dispatchers.Main).launch {
+            key.forEach { item ->
+                val intentId =
+                    (itemList).filter { it.id == item && it.eventDate != null && it.eventDone == 0 }
+                if (intentId.isNotEmpty()) {
+                    intentId.first().intentId?.let { cancelAlarm(context, it) }
+                }
+            }
+            this@ListFragment.keyList.clear()
+            itemAdapter.selectionTracker?.clearSelection()
         }
     }
 

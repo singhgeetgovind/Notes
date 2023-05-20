@@ -14,6 +14,7 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.notes.R
@@ -28,9 +29,15 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if(intent?.action==Constants.ALARM_ACTIONS){
             createNotification(context, intent)
+            Log.e(TAG, "onReceive: $context" )
             context?.let{
+                val intentId= intent.getIntExtra("IntentId",0)
+                val data = Data.Builder()
+                    .putInt("IntentId",intentId)
+                    .build()
                 val workManager = WorkManager.getInstance(context)
                 val workerRequest = OneTimeWorkRequestBuilder<AlarmWorker>()
+                    .setInputData(data)
                     .build()
                 workManager.enqueue(workerRequest)
             }

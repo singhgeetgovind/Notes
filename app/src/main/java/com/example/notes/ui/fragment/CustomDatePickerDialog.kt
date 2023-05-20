@@ -9,7 +9,6 @@ import android.widget.DatePicker
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import java.text.SimpleDateFormat
-
 import java.util.*
 
 class CustomDatePickerDialog(private val dateCallBack: DateCallBack): DialogFragment(),DatePickerDialog.OnDateSetListener{
@@ -27,6 +26,7 @@ class CustomDatePickerDialog(private val dateCallBack: DateCallBack): DialogFrag
         val  datePickerDialog = DatePickerDialog(requireActivity(),this,year,month,day).apply {
             this.datePicker.minDate = System.currentTimeMillis()
         }
+        Log.d(TAG,"getCreatedDate: ${SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH).format(calendar.timeInMillis)}")
         return  datePickerDialog
     }
 
