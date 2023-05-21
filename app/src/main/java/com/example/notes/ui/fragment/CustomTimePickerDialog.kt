@@ -2,28 +2,20 @@ package com.example.notes.ui.fragment
 
 import android.app.Dialog
 import android.app.TimePickerDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.text.format.DateFormat
-import android.util.Log
 import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
 import java.util.*
-import kotlin.time.Duration.Companion.hours
+import java.util.concurrent.TimeUnit
 
 
 class CustomTimePickerDialog(private val callBack: TimeCallBack) : DialogFragment(),TimePickerDialog.OnTimeSetListener {
-    private var hourOfDay : Int = setFormat()
+
     private val TAG = "CustomTimePickerDialog"
-    private fun setFormat(): Int {
-        Log.d(TAG, "setFormat: ${System.currentTimeMillis().hours}")
-        return when(System.currentTimeMillis().hours){
-            else-> 24
-        }
-
-    }
-
-    private var minute : Int = 0
+    private var millis : Long = System.currentTimeMillis()
+    private var hourOfDay : Int = (TimeUnit.MILLISECONDS.toHours(millis) % 24).toInt()
+    private var minute : Int = (TimeUnit.MILLISECONDS.toMinutes(millis) % 60).toInt()
     private lateinit var calendar:Calendar
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         calendar= Calendar.getInstance()
@@ -45,11 +37,6 @@ class CustomTimePickerDialog(private val callBack: TimeCallBack) : DialogFragmen
         return minute
     }
 
-    override fun onCancel(dialog: DialogInterface) {
-        super.onCancel(dialog)
-        hourOfDay= 12
-        minute = 0
-    }
     interface TimeCallBack{
         fun timeClick(hours: Int?, minute: Int?)
     }

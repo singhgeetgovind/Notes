@@ -1,18 +1,28 @@
 package com.example.notes.utils
 
 import android.annotation.SuppressLint
+import android.util.Log
 import java.util.*
 
 object Utils {
+    private const val TAG = "Utils"
     @SuppressLint("SimpleDateFormat")
-    fun getInMilliSecond(date: Calendar, hour: Int, minute: Int): Long {
-        date.set(Calendar.HOUR, hour)
-        date.set(Calendar.MINUTE, minute)
-        date.set(Calendar.SECOND, 0)
-
-        if (date.before(Calendar.getInstance())) {
-            date.add(Calendar.DATE, 1)
+    fun getInMilliSecond(cal: Calendar, hour: Int, minute: Int): Long {
+        with(cal){
+            set(Calendar.HOUR, hour)
+            set(Calendar.MINUTE, minute)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND,0)
         }
-        return date.timeInMillis
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.SECOND,0)
+        calendar.set(Calendar.MILLISECOND,0)
+        Log.d(TAG, "getInMilliSecond: ${cal.timeInMillis} ${calendar.timeInMillis}")
+        return if (cal.before(calendar)) {
+            calendar.run{
+                add(Calendar.DATE, 1)
+                timeInMillis
+            }
+        }else cal.timeInMillis
     }
 }

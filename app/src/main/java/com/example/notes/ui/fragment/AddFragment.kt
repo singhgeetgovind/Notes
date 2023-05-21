@@ -24,9 +24,6 @@ import com.example.notes.services.scheduleEvent
 import com.example.notes.utils.CustomSnackbar
 import com.example.notes.utils.Utils.getInMilliSecond
 import com.example.notes.viewmodels.MyViewModel
-import com.google.android.material.chip.Chip
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import me.saket.bettermovementmethod.BetterLinkMovementMethod
 import java.text.SimpleDateFormat
@@ -41,19 +38,14 @@ class AddFragment : DialogFragment(), MenuProvider,BetterLinkMovementMethod.OnLi
     private lateinit var binding: FragmentAddBinding
     private val myViewModel: MyViewModel by activityViewModels()
     private var isActive = -1
-    private lateinit var addExtendFloatButton: ExtendedFloatingActionButton
-    private lateinit var dateFloatButton: FloatingActionButton
-    private lateinit var timeFloatButton: FloatingActionButton
-    private lateinit var cancelAlarmButton: FloatingActionButton
     private var date:Long?=null
     set(value) {
         binding.scheduledTime.isVisible = value!=null
         field = value
     }
-    private var isAllFabAvailable = false
     private val customDatePickerDialogFragment: CustomDatePickerDialog by lazy{CustomDatePickerDialog(this)}
     private val customTimePickerDialogFragment: CustomTimePickerDialog by lazy{CustomTimePickerDialog(this)}
-    private lateinit var chip :Chip
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -71,8 +63,6 @@ class AddFragment : DialogFragment(), MenuProvider,BetterLinkMovementMethod.OnLi
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         betterLinkMovementMethod = BetterLinkMovementMethod.newInstance()
-//        activity?.addMenuProvider(this)
-        chip = Chip(requireContext())
         with(binding){
             topMenu.setOnMenuItemClickListener(this@AddFragment)
             topMenu.menu.findItem(R.id.saveButton).isEnabled = !title.text?.trim().isNullOrBlank() && !description.text?.trim().isNullOrBlank()

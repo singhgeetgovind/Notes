@@ -24,6 +24,8 @@
                 tools:text="14 Mar 23,19:56 am"
                 tools:visibility="visible"
                 android:visibility="gone"
+                app:chipIconSize="18dp"
+                app:closeIconSize="18dp"
                 app:chipIcon="@drawable/baseline_alarm_24"
                 app:closeIcon="@drawable/baseline_close_24"
                 app:closeIconEnabled="true"
