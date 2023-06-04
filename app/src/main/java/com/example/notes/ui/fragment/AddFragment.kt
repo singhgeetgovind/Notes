@@ -129,7 +129,7 @@ class AddFragment : DialogFragment(), MenuProvider,BetterLinkMovementMethod.OnLi
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         Toast.makeText(requireContext(), "menu", Toast.LENGTH_SHORT).show()
-        menuInflater.inflate(R.menu.top_menu, menu)
+        menuInflater.inflate(R.menu.action_menu, menu)
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {

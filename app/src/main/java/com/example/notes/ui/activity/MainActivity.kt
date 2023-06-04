@@ -39,8 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         sharedPreferences = getSharedPreferences("Theme", MODE_PRIVATE)
         isNightMode = sharedPreferences.getInt("Dark mode", 0)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        /*when (isNightMode) {
+        when (isNightMode) {
             AppCompatDelegate.MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
@@ -48,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
             else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        }*/
+        }
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = navHostFragment.findNavController()

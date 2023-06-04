@@ -2,7 +2,6 @@
     <string name="app_name">Notes</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="low_priority">Low Priority</string>
     <string name="medium_priority">Medium Priority</string>
@@ -17,4 +16,5 @@
     <string name="emptyNotesMessage">No Notes</string>
     <string name="add_button">Add Button</string>
     <string name="time">Time</string>
+    <string name="filter">Filter</string>
 </resources>

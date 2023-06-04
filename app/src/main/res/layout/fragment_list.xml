@@ -11,26 +11,12 @@
         android:layout_height="wrap_content"
         >
         <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title="Notes"
-            app:titleCentered="true"
-            >
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/search"
-                android:inputType="text|textNoSuggestions"
-                android:maxLines="1"
-                android:imeOptions="actionSearch"
-                android:drawableTint="@color/primaryVariant"
-                android:layout_marginHorizontal="10dp"
-                android:drawableStart="@drawable/ic_baseline_search_24"
-                android:drawablePadding="20dp"
-                android:padding="8dp"
-                android:background="@drawable/rounded_corner"
-                android:autofillHints="no" />
-        </com.google.android.material.appbar.MaterialToolbar>
+            app:menu="@menu/top_bar_menu"
+            />
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

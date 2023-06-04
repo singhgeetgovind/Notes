@@ -3,7 +3,13 @@ package com.example.notes.ui.fragment
 
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.ActionMode
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -29,7 +35,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ListFragment : Fragment(), OnClickListener{
+class ListFragment : Fragment(), OnClickListener,
+    Toolbar.OnMenuItemClickListener {
 
     companion object {
         const val TAG = "ListFragment"
@@ -111,7 +118,7 @@ class ListFragment : Fragment(), OnClickListener{
                     LinearLayoutManager.HORIZONTAL,false)
             }
         }
-
+        binding.topBar.setOnMenuItemClickListener(this)
         binding.addButton.setOnClickListener {
             findNavController().navigate(ListFragmentDirections.actionListFragmentToAddFragment())
         }
@@ -179,6 +186,22 @@ class ListFragment : Fragment(), OnClickListener{
             }
             this@ListFragment.keyList.clear()
             itemAdapter.selectionTracker?.clearSelection()
+        }
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.search -> {
+                findNavController().navigate(ListFragmentDirections.actionListFragmentToSearchDialogFragment())
+                true
+            }
+
+            R.id.settings -> {
+                findNavController().navigate(ListFragmentDirections.actionListFragmentToApiListFragment())
+                true
+            }
+
+            else -> {true}
         }
     }
 
