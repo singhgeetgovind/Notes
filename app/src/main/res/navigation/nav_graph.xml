@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.example.notes.ui.fragment.AddFragment"
+        android:name="com.singhgeetgovind.notes.ui.fragment.AddFragment"
         android:label="Add"
         tools:layout="@layout/fragment_add">
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.example.notes.ui.fragment.ListFragment"
+        android:name="com.singhgeetgovind.notes.ui.fragment.ListFragment"
         android:label="List"
         tools:layout="@layout/fragment_list" >
         <action
@@ -57,7 +57,7 @@
     </fragment>
     <fragment
         android:id="@+id/updateFragment"
-        android:name="com.example.notes.ui.fragment.UpdateFragment"
+        android:name="com.singhgeetgovind.notes.ui.fragment.UpdateFragment"
         android:label="Update"
         tools:layout="@layout/fragment_update">
 
@@ -72,22 +72,22 @@
             app:destination="@id/toolsLayoutBottomSheet" />
         <argument
             android:name="parcelable_notes"
-            app:argType="com.example.notes.model.Notes"
+            app:argType="com.singhgeetgovind.notes.model.Notes"
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/apiListFragment"
-        android:name="com.example.notes.ui.fragment.SettingFragment"
+        android:name="com.singhgeetgovind.notes.ui.fragment.SettingFragment"
         android:label="Api Data"
         tools:layout="@layout/fragment_setting" />
     <dialog
         android:id="@+id/toolsLayoutBottomSheet"
-        android:name="com.example.notes.ui.fragment.ToolsLayoutBottomSheet"
+        android:name="com.singhgeetgovind.notes.ui.fragment.ToolsLayoutBottomSheet"
         android:label="ToolsLayoutBottomSheet" />
     <dialog
         android:id="@+id/searchDialogFragment"
-        android:name="com.example.notes.ui.fragment.SearchDialogFragment"
+        android:name="com.singhgeetgovind.notes.ui.fragment.SearchDialogFragment"
         android:label="fragment_search_dialog"
         tools:layout="@layout/fragment_search_dialog" />
 </navigation>
