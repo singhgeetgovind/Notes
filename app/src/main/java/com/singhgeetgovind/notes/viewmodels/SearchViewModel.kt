@@ -13,14 +13,11 @@ class SearchViewModel@Inject constructor(private val repository: Repository) : V
     /*var searchResult = MutableLiveData<List<Notes>>()
     private set*/
 
-    val searchQuery = MutableLiveData<String>()
+    var searchQuery = MutableLiveData<String>()
+    private set
 
-    val searchResult = Transformations.switchMap(searchQuery) { query ->
+    var searchResult = Transformations.switchMap(searchQuery) { query ->
         repository.searchQueryList(query)
     }
-
-    /*fun searchQueryList(searchQuery: String) {
-            searchResult.value = repository.searchQueryList(searchQuery).value
-            Log.d(TAG, "searchQueryList: ${searchResult.value}")
-    }*/
+    private set
 }

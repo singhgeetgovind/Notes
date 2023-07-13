@@ -25,5 +25,5 @@ class Repository @Inject constructor(private val notesDao: NotesDao/*, private v
     suspend fun updateEventTrigger(intentId:Int){
         notesDao.updateEventTrigger(intentId)
     }
-    fun searchQueryList(searchQuery: String) = notesDao.searchQueryList(searchQuery)
+    fun searchQueryList(searchQuery: String): LiveData<List<Notes>> = notesDao.searchQueryList(searchQuery)
 }

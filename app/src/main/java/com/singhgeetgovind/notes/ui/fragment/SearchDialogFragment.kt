@@ -6,7 +6,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -45,7 +44,6 @@ class SearchDialogFragment : DialogFragment(),SearchView.OnQueryTextListener {
 
         }
         searchViewModel.searchResult.observe(viewLifecycleOwner){
-            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
             searchAdapter.submitList(it)
         }
         binding.searchResult.adapter = searchAdapter

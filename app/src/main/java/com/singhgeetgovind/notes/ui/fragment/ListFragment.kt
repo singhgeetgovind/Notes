@@ -83,6 +83,7 @@ class ListFragment : Fragment(), OnClickListener,
                         actionMode?.finish()
                     }
                 }
+                actionMode?.title="${keyList.size}"
             }catch (e:Exception){
                 Log.e(TAG, "onItemStateChanged: ${e.message}" )
             }
