@@ -54,7 +54,8 @@ class SearchDialogFragment : DialogFragment(),SearchView.OnQueryTextListener {
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (!query.isNullOrBlank()){
             Log.d(TAG, "onQueryTextChange: $query")
-            searchViewModel.searchQueryList(query)
+//            searchViewModel.searchQueryList(query)
+            searchViewModel.searchQuery.value = query
         }
         return true
     }
