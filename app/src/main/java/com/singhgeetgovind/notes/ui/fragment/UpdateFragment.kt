@@ -7,13 +7,14 @@ import android.util.Log
 import android.view.*
 import android.widget.RadioGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.singhgeetgovind.notes.R
 import com.singhgeetgovind.notes.databinding.FragmentUpdateBinding
 import com.singhgeetgovind.notes.model.Notes
@@ -22,8 +23,6 @@ import com.singhgeetgovind.notes.services.scheduleEvent
 import com.singhgeetgovind.notes.utils.CustomSnackbar
 import com.singhgeetgovind.notes.utils.Utils
 import com.singhgeetgovind.notes.viewmodels.MyViewModel
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import me.saket.bettermovementmethod.BetterLinkMovementMethod
 import java.text.SimpleDateFormat
@@ -178,10 +177,8 @@ class UpdateFragment : Fragment(), RadioGroup.OnCheckedChangeListener,BetterLink
                     )
                 }
                 args.parcelableNotes?.let {
-                    Toast.makeText(requireContext(), "in $date", Toast.LENGTH_SHORT).show()
-                    if(date==null) {
+                    if(date!=null) {
                         cancelAlarm(requireContext(), it.intentId ?: 0)
-                        Toast.makeText(requireContext(), "out ${it.intentId}", Toast.LENGTH_SHORT).show()
                     }
                 }
                 findNavController().popBackStack()

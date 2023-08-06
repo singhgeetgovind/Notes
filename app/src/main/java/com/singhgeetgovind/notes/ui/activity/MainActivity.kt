@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         sharedPreferences = getSharedPreferences("Theme", MODE_PRIVATE)
-        isNightMode = sharedPreferences.getInt("Dark mode", 0)
+        isNightMode = sharedPreferences.getInt("Dark mode", 1)
         when (isNightMode) {
             AppCompatDelegate.MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)

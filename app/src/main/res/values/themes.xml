@@ -2,17 +2,17 @@
     <!-- Base application theme. -->
     <style name="Theme.Affirmations" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryVariant">@color/primaryVariant</item>
-        <item name="colorOnPrimary">@color/primaryColor</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorPrimary</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorSecondaryVariant">@color/secondaryVariant</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >@color/primaryVariant</item>
+        <item name="android:statusBarColor" >@color/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="android:textColor">@color/primaryVariant</item>
+        <item name="android:textColor">@color/colorPrimaryVariant</item>
         <item name="fontFamily">@font/archivo_medium</item>
         <item name="actionModeCloseDrawable">@drawable/baseline_close_24</item>
         <item name="windowActionModeOverlay">true</item>

@@ -8,9 +8,9 @@ import android.view.ActionMode
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -105,10 +105,6 @@ class ListFragment : Fragment(), OnClickListener,
             }
         }
     }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentListBinding.inflate(inflater, container, false)
@@ -147,7 +143,7 @@ class ListFragment : Fragment(), OnClickListener,
         with(binding){
             searchField.editText.setOnEditorActionListener { v, actionId, event ->
                     when (actionId) {
-                        MotionEvent.ACTION_DOWN -> {
+                        EditorInfo.IME_ACTION_SEARCH -> {
                             searchViewModel.searchQuery.value = v.text.toString()
                             true
                         }
@@ -163,7 +159,6 @@ class ListFragment : Fragment(), OnClickListener,
                     }
                     SearchView.TransitionState.HIDDEN,SearchView.TransitionState.HIDING->{
                         addButton.isVisible= true
-                        searchViewModel.searchQuery.value = ""
                     }
                     else->{
                         addButton.isVisible= false
@@ -249,7 +244,9 @@ class ListFragment : Fragment(), OnClickListener,
                     itemAdapter.selectionTracker?.hasSelection()?.run {
                         if(this){
                             viewModel.deleteData(keyList.toList())
-                            cancelOutReminder(keyList,itemAdapter.currentList as List<Notes>)
+                            if(itemAdapter.currentList is List<*>) {
+                                cancelOutReminder(keyList, itemAdapter.currentList as List<Notes>)
+                            }
                             actionMode?.finish()
                         }
                     }

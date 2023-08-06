@@ -2,9 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primaryColor">#86202020</color>
-    <color name="primaryVariant">#a7c0cd</color>
-    <color name="secondaryColor">#37474f</color>
+    <color name="colorPrimary">#86202020</color>
+    <color name="colorPrimaryVariant">#a7c0cd</color>
+    <color name="colorSecondary">#37474f</color>
+    <color name="colorOnSecondary">#17262A</color>
     <color name="secondaryVariant">#62727b</color>
     <color name="secondaryDarkColor">#102027</color>
     <color name="primaryTextColor">#000000</color>
