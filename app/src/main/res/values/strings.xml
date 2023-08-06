@@ -17,4 +17,6 @@
     <string name="add_button">Add Button</string>
     <string name="time">Time</string>
     <string name="filter">Filter</string>
+    <string name="profile">Profile</string>
+    <string name="setting">Setting</string>
 </resources>

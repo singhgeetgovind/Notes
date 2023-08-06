@@ -10,6 +10,8 @@
     <style name="Custom.ActionMode" parent="Widget.AppCompat.ActionMode">
         <item name="background">@color/primaryVariant</item>
         <item name="titleTextColor">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondary">@color/white</item>
     </style>
     <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
         <item name="materialThemeOverlay">@style/Custom.ToolBar</item>
@@ -20,6 +22,7 @@
         <item name="colorPrimarySurface">@color/primaryColor</item>
         <item name="colorOnSecondary">@color/primaryColor</item>
         <item name="colorOnPrimary">@color/black</item>
+        <item name="titleTextColor">@color/secondaryTextColor</item>
         <item name="iconTint">@color/primaryColor</item>
         <item name="navigationIconTint">@color/primaryColor</item>
     </style>
@@ -35,5 +38,22 @@
         <!-- Customize the dialog animation here -->
         <item name="android:windowEnterAnimation">@anim/nav_default_enter_anim</item>
         <item name="android:windowExitAnimation">@anim/nav_default_exit_anim</item>
+    </style>
+    <style name="Widget.Chip.Action" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="fontFamily">@font/archivo_semibold</item>
+        <item name="chipIconTint">@color/primaryColor</item>
+        <item name="closeIconTint">@color/primaryColor</item>
+        <item name="android:textSize">12sp</item>
+        <item name="closeIconSize">24sp</item>
+    </style>
+    <style name="Custom.SearchBar" parent="Widget.Material3.SearchBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/primaryColor</item>
+        <item name="colorPrimarySurface">@color/primaryColor</item>
+        <item name="colorOnSecondary">@color/primaryColor</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="titleTextColor">@color/secondaryTextColor</item>
+        <item name="iconTint">@color/primaryColor</item>
+        <item name="navigationIconTint">@color/primaryColor</item>
     </style>
 </resources>

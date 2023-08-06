@@ -1,5 +1,6 @@
 package com.singhgeetgovind.notes.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,7 +13,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
-//    val apiData = repository.getApiData1()
+    var profileUrl: String = ""
+    get() {
+        profileUrl=field
+        Log.e(TAG, "field: $field" )
+        return field
+    }
+    private set(value) {
+        field = value.ifBlank {
+            arrayOf("https://xsgames.co/randomusers/assets/avatars/male/${(0..78).random()}.jpg",
+            "https://picsum.photos/200/300?random=${(100..200).random()}").random()
+        }
+    }
+
+    //    val apiData = repository.getApiData1()
     private val TAG = "MyViewModel"
 
     fun getData(): LiveData<List<Notes>> {

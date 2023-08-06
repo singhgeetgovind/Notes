@@ -1,17 +1,22 @@
 package com.singhgeetgovind.notes.ui.fragment
 
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.ActionMode
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
@@ -19,6 +24,13 @@ import androidx.recyclerview.selection.SelectionTracker.SelectionObserver
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.google.android.material.search.SearchView
 import com.singhgeetgovind.notes.R
 import com.singhgeetgovind.notes.databinding.FragmentListBinding
 import com.singhgeetgovind.notes.model.EmptyNotes
@@ -27,8 +39,10 @@ import com.singhgeetgovind.notes.services.cancelAlarm
 import com.singhgeetgovind.notes.ui.adapter.ItemAdapter
 import com.singhgeetgovind.notes.ui.adapter.NotesDetailLookUp
 import com.singhgeetgovind.notes.ui.adapter.NotesKeyProvider
+import com.singhgeetgovind.notes.ui.adapter.SearchAdapter
 import com.singhgeetgovind.notes.ui.baseinterface.OnClickListener
 import com.singhgeetgovind.notes.viewmodels.MyViewModel
+import com.singhgeetgovind.notes.viewmodels.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,6 +58,8 @@ class ListFragment : Fragment(), OnClickListener,
     private var actionMode: ActionMode? = null
     private var keyList: MutableList<Int> = mutableListOf()
     private val viewModel: MyViewModel by activityViewModels()
+    private val searchAdapter: SearchAdapter by lazy { SearchAdapter() }
+    private val searchViewModel : SearchViewModel by viewModels()
     private lateinit var binding: FragmentListBinding
     private lateinit var itemAdapter: ItemAdapter
 
@@ -99,6 +115,7 @@ class ListFragment : Fragment(), OnClickListener,
         itemAdapter = ItemAdapter(this)
         binding.listOfAffirmations.adapter = itemAdapter
         itemAdapter.selectionTracker = initTracker()
+        binding.loadImage()
         return binding.root
     }
 
@@ -119,11 +136,85 @@ class ListFragment : Fragment(), OnClickListener,
                     LinearLayoutManager.HORIZONTAL,false)
             }
         }
-        binding.topBar.setOnMenuItemClickListener(this)
+//        binding.topBar.setOnMenuItemClickListener(this)
         binding.addButton.setOnClickListener {
             findNavController().navigate(ListFragmentDirections.actionListFragmentToAddFragment())
         }
+        searchViewModel.searchResult.observe(viewLifecycleOwner){
+            searchAdapter.submitList(it)
+            binding.searchResult.adapter = searchAdapter
+        }
+        with(binding){
+            searchField.editText.setOnEditorActionListener { v, actionId, event ->
+                    when (actionId) {
+                        MotionEvent.ACTION_DOWN -> {
+                            searchViewModel.searchQuery.value = v.text.toString()
+                            true
+                        }
+                        else -> {
+                            false
+                        }
+                    }
+                }
+            searchField.addTransitionListener { _, _, newState ->
+                when(newState){
+                    SearchView.TransitionState.SHOWING,SearchView.TransitionState.SHOWN->{
+                        addButton.isVisible= false
+                    }
+                    SearchView.TransitionState.HIDDEN,SearchView.TransitionState.HIDING->{
+                        addButton.isVisible= true
+                        searchViewModel.searchQuery.value = ""
+                    }
+                    else->{
+                        addButton.isVisible= false
+                    }
+                }
+            }
+        }
         itemAdapter.selectionTracker?.addObserver(ListSelectionObserver())
+    }
+
+    private fun FragmentListBinding.loadImage() {
+
+            try {
+                Glide.with(requireContext())
+                    .load(viewModel.profileUrl)
+                    .centerCrop()
+                    .circleCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.DATA)
+                    .sizeMultiplier(0.50f)
+                    .addListener(object:RequestListener<Drawable>{
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            Log.e(TAG, "loadImage: failed")
+                            return true
+                        }
+
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            Log.d(TAG, "loadImage: ready")
+                            resource?.let { renderProfileImage(it) }
+                            return true
+                        }
+
+                    }).submit()
+
+            } catch (e: Exception) {
+                Log.e(TAG, "loadImage: ${e.message}")
+            }
+    }
+
+    private fun FragmentListBinding.renderProfileImage(resource:Drawable) {
+        lifecycleScope.launch(Dispatchers.Main){ searchTopBar.menu.findItem(R.id.profile).icon = resource }
     }
 
     override fun onItemClickListener(item: Notes) {
