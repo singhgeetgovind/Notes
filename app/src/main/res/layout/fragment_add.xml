@@ -26,6 +26,8 @@
                 android:visibility="gone"
                 app:chipIconSize="18dp"
                 app:closeIconSize="18dp"
+                app:chipStartPadding="10dp"
+                app:chipEndPadding="10dp"
                 app:chipIcon="@drawable/baseline_alarm_24"
                 app:closeIcon="@drawable/baseline_close_24"
                 app:closeIconEnabled="true"

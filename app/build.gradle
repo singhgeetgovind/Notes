@@ -25,6 +25,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String","SERVER_URL",'"https://apitest.digiboxx.com/"'
+            applicationIdSuffix '.debug'
+
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -38,6 +43,21 @@ android {
         jvmTarget = '1.8'
     }
     namespace 'com.singhgeetgovind.notes'
+    /*productFlavors {
+        dev {
+            dimension 'version'
+            versionName '1.0'
+            buildConfigField "String","SERVER_URL",'"https://apitest.digiboxx.com/"'
+            applicationId 'com.singhgeetgovind.oncloud'
+
+        }
+        prod {
+            dimension 'version'
+            versionName '1.0'
+            buildConfigField "String","SERVER_URL",'"https://apitest.digiboxx.com/"'
+            applicationId 'com.singhgeetgovind.oncloud'
+        }
+    }*/
 }
 
 dependencies {

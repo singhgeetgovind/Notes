@@ -34,6 +34,7 @@ class AddFragment : DialogFragment(), MenuProvider,BetterLinkMovementMethod.OnLi
     CustomTimePickerDialog.TimeCallBack, CustomDatePickerDialog.DateCallBack,
     Toolbar.OnMenuItemClickListener {
     private val TAG = "AddFragment"
+    private lateinit var a:String
     private lateinit var betterLinkMovementMethod: BetterLinkMovementMethod
     private lateinit var binding: FragmentAddBinding
     private val myViewModel: MyViewModel by activityViewModels()
