@@ -18,6 +18,8 @@
     <style name="Custom.ActionMode" parent="Widget.AppCompat.ActionMode">
         <item name="background">@color/colorSecondary</item>
         <item name="titleTextStyle">@style/Custom.ToolBar.Title.TextAppearance</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondary">@color/white</item>
     </style>
     <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
         <item name="materialThemeOverlay">@style/Custom.ToolBar</item>
@@ -49,6 +51,6 @@
     <style name="Custom.ToolBar.Title.TextAppearance" parent="TextAppearance.AppCompat.Body1">
         <item name="fontFamily">@font/archivo_medium</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/colorSecondary</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>

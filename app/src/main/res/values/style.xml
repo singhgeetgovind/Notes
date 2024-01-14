@@ -17,8 +17,8 @@
     <style name="Custom.ActionMode" parent="Widget.AppCompat.ActionMode">
         <item name="background">@color/colorPrimaryVariant</item>
         <item name="titleTextStyle">@style/Custom.ToolBar.Title.TextAppearance</item>
-        <item name="colorOnSecondary">@color/white</item>
-        <item name="colorSecondary">@color/white</item>
+        <item name="colorOnSecondary">#F44336</item>
+        <item name="colorSecondary">#F44336</item>
     </style>
     <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
         <item name="materialThemeOverlay">@style/Custom.ToolBar</item>

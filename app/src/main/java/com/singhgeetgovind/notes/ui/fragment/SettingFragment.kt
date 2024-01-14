@@ -1,7 +1,6 @@
 package com.singhgeetgovind.notes.ui.fragment
 
 import android.annotation.SuppressLint
-import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,12 +11,14 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.singhgeetgovind.notes.R
 import com.singhgeetgovind.notes.databinding.FragmentSettingBinding
+import com.singhgeetgovind.notes.shared_preferences.SharedPreferences
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class SettingFragment : Fragment() {
     private lateinit var binding: FragmentSettingBinding
-    private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var edit: SharedPreferences.Editor
+    @Inject lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +34,7 @@ class SettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            when(sharedPreferences.getInt("Dark mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)) {
+            when(sharedPreferences.fetchSharedPrefData<Int>("Dark mode")) {
                 AppCompatDelegate.MODE_NIGHT_YES->darkMode.check(R.id.dark)
                 AppCompatDelegate.MODE_NIGHT_NO->darkMode.check(R.id.light)
                 else->darkMode.check(R.id.system_default)
@@ -43,15 +44,15 @@ class SettingFragment : Fragment() {
             when (checkedId) {
                 R.id.dark -> {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    edit.putInt("Dark mode",AppCompatDelegate.MODE_NIGHT_YES).apply()
+                    sharedPreferences.saveSharedPrefData("Dark mode",AppCompatDelegate.MODE_NIGHT_YES)
                 }
                 R.id.light -> {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    edit.putInt("Dark mode", AppCompatDelegate.MODE_NIGHT_NO).apply()
+                    sharedPreferences.saveSharedPrefData("Dark mode", AppCompatDelegate.MODE_NIGHT_NO)
                 }
                 else -> {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                    edit.putInt("Dark mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM).apply()
+                    sharedPreferences.saveSharedPrefData("Dark mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 }
             }
         }

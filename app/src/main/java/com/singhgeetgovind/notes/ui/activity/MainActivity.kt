@@ -4,7 +4,6 @@ package com.singhgeetgovind.notes.ui.activity
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
-import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -18,17 +17,18 @@ import androidx.navigation.ui.AppBarConfiguration
 import com.singhgeetgovind.notes.R
 import com.singhgeetgovind.notes.databinding.ActivityMainBinding
 import com.singhgeetgovind.notes.services.CustomServices
+import com.singhgeetgovind.notes.shared_preferences.SharedPreferences
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 const val TAG: String = "MainActivity"
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private var isNightMode: Int =1
-    private lateinit var sharedPreferences: SharedPreferences
+    @Inject lateinit var sharedPreferences : SharedPreferences
     private lateinit var binding: ActivityMainBinding
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -36,10 +36,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        sharedPreferences = getSharedPreferences("Theme", MODE_PRIVATE)
-        isNightMode = sharedPreferences.getInt("Dark mode", 1)
-        when (isNightMode) {
+        when (sharedPreferences.fetchSharedPrefData<Int>("Dark mode")) {
             AppCompatDelegate.MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }

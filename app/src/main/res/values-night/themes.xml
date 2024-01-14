@@ -3,7 +3,7 @@
     <style name="Theme.Affirmations" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorPrimaryVariant">@color/secondaryVariant</item>
         <item name="colorPrimaryContainer">@color/colorSecondary</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->

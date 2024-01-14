@@ -112,6 +112,16 @@ class ListFragment : Fragment(), OnClickListener,
         binding.listOfAffirmations.adapter = itemAdapter
         itemAdapter.selectionTracker = initTracker()
         binding.loadImage()
+        binding.searchTopBar.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.profile->{
+                    findNavController().navigate(ListFragmentDirections.actionListFragmentToSettingFragment())
+                    true
+                }else->{
+                    false
+                }
+            }
+        }
         return binding.root
     }
 
@@ -288,7 +298,7 @@ class ListFragment : Fragment(), OnClickListener,
             }
 
             R.id.settings -> {
-                findNavController().navigate(ListFragmentDirections.actionListFragmentToApiListFragment())
+                findNavController().navigate(ListFragmentDirections.actionListFragmentToSettingFragment())
                 true
             }
 
