@@ -36,6 +36,7 @@ import com.singhgeetgovind.notes.databinding.FragmentListBinding
 import com.singhgeetgovind.notes.model.EmptyNotes
 import com.singhgeetgovind.notes.model.Notes
 import com.singhgeetgovind.notes.services.cancelAlarm
+import com.singhgeetgovind.notes.ui.activity.MainActivity
 import com.singhgeetgovind.notes.ui.adapter.ItemAdapter
 import com.singhgeetgovind.notes.ui.adapter.NotesDetailLookUp
 import com.singhgeetgovind.notes.ui.adapter.NotesKeyProvider
@@ -106,6 +107,13 @@ class ListFragment : Fragment(), OnClickListener,
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (activity as MainActivity).sharedPreferences.fetchSharedPrefData<String>("ProfileImage").apply {
+            viewModel.profileUrl = this ?: ""
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentListBinding.inflate(inflater, container, false)
         itemAdapter = ItemAdapter(this)
@@ -169,6 +177,7 @@ class ListFragment : Fragment(), OnClickListener,
                     }
                     SearchView.TransitionState.HIDDEN,SearchView.TransitionState.HIDING->{
                         addButton.isVisible= true
+                        searchAdapter.submitList(emptyList())
                     }
                     else->{
                         addButton.isVisible= false
@@ -184,6 +193,7 @@ class ListFragment : Fragment(), OnClickListener,
             try {
                 Glide.with(requireContext())
                     .load(viewModel.profileUrl)
+                    .error(R.drawable.ic_baseline_account_circle_24)
                     .centerCrop()
                     .circleCrop()
                     .diskCacheStrategy(DiskCacheStrategy.DATA)

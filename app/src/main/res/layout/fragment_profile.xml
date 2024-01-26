@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.fragment.ui.login.ProfileFragment">
 
     <FrameLayout
@@ -20,14 +20,21 @@
         android:id="@+id/profileImage"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:strokeWidth="2dp"
+        tools:src="@tools:sample/avatars"
+        android:alpha="0.9"
+        app:shapeAppearanceOverlay="@style/ShapeableImageView.ShapeAppearance"
         app:strokeColor="@color/colorPrimaryVariant"
         />
         <com.google.android.material.button.MaterialButton
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:id="@+id/pickImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/baseline_camera"
+            android:padding="0dp"
+            android:alpha="0.4"
+            app:icon="@drawable/baseline_camera"
+            app:iconSize="36sp"
             />
     </FrameLayout>
 <com.google.android.material.textfield.TextInputLayout
@@ -43,8 +50,7 @@
     <com.google.android.material.textfield.TextInputEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-
+        android:inputType="text"
         android:selectAllOnFocus="true">
     </com.google.android.material.textfield.TextInputEditText>
 </com.google.android.material.textfield.TextInputLayout>
@@ -56,11 +62,13 @@
         android:layout_gravity="start"
         android:layout_marginHorizontal="48dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="40dp"
         android:enabled="false"
         android:text="@string/save"
+        style="@style/Widget.Material3.Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fullName"
         app:layout_constraintVertical_bias="0.2" />
 

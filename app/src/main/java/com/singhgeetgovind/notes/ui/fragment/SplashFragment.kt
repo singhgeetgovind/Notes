@@ -45,7 +45,9 @@ class SplashFragment : Fragment() {
                 }
 
                 override fun onAnimationEnd(p0: Animation?) {
-                    findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToListFragment())
+                    if(!nextPageButton.isVisible){
+                        findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToListFragment())
+                    }
                 }
 
                 override fun onAnimationRepeat(p0: Animation?) {

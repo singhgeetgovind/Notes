@@ -80,7 +80,11 @@
         android:id="@+id/settingFragment"
         android:name="com.singhgeetgovind.notes.ui.fragment.SettingFragment"
         android:label="Api Data"
-        tools:layout="@layout/fragment_setting" />
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment_to_splashFragment"
+            app:destination="@id/splashFragment" />
+    </fragment>
     <dialog
         android:id="@+id/toolsLayoutBottomSheet"
         android:name="com.singhgeetgovind.notes.ui.fragment.ToolsLayoutBottomSheet"
@@ -116,6 +120,13 @@
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profileFragment_to_listFragment"
-            app:destination="@id/listFragment" />
+            app:destination="@id/listFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/nav_default_enter_anim"
+            app:popExitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
     </dialog>
 </navigation>

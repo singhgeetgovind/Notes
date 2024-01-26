@@ -50,6 +50,9 @@ class SharedPreferences @Inject constructor(
     }
     fun clearPreferences() : Boolean{
         edit.clear().apply()
-        return sharedPreferences.all.isEmpty()
+        return sharedPreferences.all.isEmpty().run{
+            Log.d(TAG, "clearPreferences: $this")
+            this
+        }
     }
 }

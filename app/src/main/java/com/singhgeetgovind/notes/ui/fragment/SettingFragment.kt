@@ -3,12 +3,15 @@ package com.singhgeetgovind.notes.ui.fragment
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import com.singhgeetgovind.notes.R
 import com.singhgeetgovind.notes.databinding.FragmentSettingBinding
 import com.singhgeetgovind.notes.shared_preferences.SharedPreferences
@@ -53,6 +56,21 @@ class SettingFragment : Fragment() {
                 else -> {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                     sharedPreferences.saveSharedPrefData("Dark mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                }
+            }
+        }
+        binding.clearDataBtn.setOnClickListener {
+            if(sharedPreferences.clearPreferences()) {
+                Log.d("sharedPreferences", "onViewCreated: clear")
+                findNavController().backQueue.filter { it.destination.id == R.id.splashFragment }.run{
+                    if(isNullOrEmpty()) {
+                        val navOptions = NavOptions.Builder()
+                            .setPopUpTo(R.id.listFragment,true)
+                            .build()
+                        findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToSplashFragment(), navOptions)
+                    }else{
+                        findNavController().popBackStack(R.id.listFragment, true)
+                    }
                 }
             }
         }

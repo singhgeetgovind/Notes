@@ -19,7 +19,7 @@ class MyViewModel @Inject constructor(private val repository: Repository) : View
         Log.e(TAG, "field: $field" )
         return field
     }
-    private set(value) {
+    set(value) {
         field = value.ifBlank {
             arrayOf("https://xsgames.co/randomusers/assets/avatars/male/${(0..78).random()}.jpg",
             "https://picsum.photos/200/300?random=${(100..200).random()}").random()

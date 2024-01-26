@@ -33,5 +33,12 @@
             android:layout_height="wrap_content"
             android:text="System default" />
     </RadioGroup>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/clearDataBtn"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        />
 
 </LinearLayout>

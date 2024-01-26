@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -25,7 +26,7 @@ const val TAG: String = "MainActivity"
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),NavController.OnDestinationChangedListener{
     @Inject lateinit var sharedPreferences : SharedPreferences
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
@@ -52,6 +53,10 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)*/
     }
 
+    override fun onResume() {
+        super.onResume()
+        navController.addOnDestinationChangedListener(this)
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     private fun scheduleJob(timeInMillis: Long) {
         val componentName = ComponentName(this, CustomServices::class.java)
@@ -81,5 +86,18 @@ class MainActivity : AppCompatActivity() {
     override fun onNightModeChanged(mode: Int) {
         super.onNightModeChanged(mode)
         Log.d(TAG, "onNightModeChanged ")
+    }
+
+    override fun onDestinationChanged(
+        controller: NavController,
+        destination: NavDestination,
+        arguments: Bundle?
+    ) {
+        Log.d(TAG, "onDestinationChanged: ${navController.backQueue.map { it.destination.label }}")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        navController.removeOnDestinationChangedListener(this)
     }
 }
