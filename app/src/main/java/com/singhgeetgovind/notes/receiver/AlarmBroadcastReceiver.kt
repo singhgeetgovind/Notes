@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import androidx.core.app.ActivityCompat
@@ -24,12 +25,12 @@ import com.singhgeetgovind.notes.worker.AlarmWorker
 import java.util.*
 
 class AlarmBroadcastReceiver : BroadcastReceiver() {
-    private val TAG = "AlarmBroadcastReceiver"
+    private val tag = "AlarmBroadcastReceiver"
     @SuppressLint("UnspecifiedImmutableFlag")
     override fun onReceive(context: Context?, intent: Intent?) {
         if(intent?.action==Constants.ALARM_ACTIONS){
             createNotification(context, intent)
-            Log.e(TAG, "onReceive: $context" )
+            Log.e(tag, "onReceive: $context" )
             context?.let{
                 val intentId= intent.getIntExtra("IntentId",0)
                 val data = Data.Builder()
@@ -51,7 +52,7 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
         val intentId= intent?.getIntExtra("IntentId",0) ?: 0
         val title= intent?.getStringExtra("Title")
         val description= intent?.getStringExtra("Description")
-        Log.d(TAG, "createNotification: $intentId")
+        Log.d(tag, "createNotification: $intentId")
         val pendingIntent = PendingIntent.getActivity(context,intentId,newIntent,PendingIntent.FLAG_UPDATE_CURRENT)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
@@ -68,6 +69,8 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
         }
         val notification = NotificationCompat.Builder(context!!, Constants.CHANNEL_ID_REMINDERS).run{
             setSmallIcon(R.drawable.ic_baseline_task_alt_24)
+            color = Color.GREEN
+            setColorized(true)
             setContentTitle(title)
             setContentText(description)
             setStyle(NotificationCompat.BigTextStyle())

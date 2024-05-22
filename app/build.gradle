@@ -5,6 +5,8 @@ plugins {
     id "kotlin-kapt"
     id("dagger.hilt.android.plugin")
     id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -80,6 +82,7 @@ dependencies {
 
     implementation("androidx.room:room-runtime:$room_version")
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.firebase:firebase-crashlytics:18.6.2'
     kapt "androidx.room:room-compiler:$room_version"
 
     //Dagger Hilt

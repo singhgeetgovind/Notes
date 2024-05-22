@@ -34,6 +34,7 @@
             android:padding="0dp"
             android:alpha="0.4"
             app:icon="@drawable/baseline_camera"
+            app:iconTint="@color/colorPrimaryVariant"
             app:iconSize="36sp"
             />
     </FrameLayout>

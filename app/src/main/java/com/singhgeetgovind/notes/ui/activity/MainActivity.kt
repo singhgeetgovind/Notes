@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(),NavController.OnDestinationChangedListe
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         when (sharedPreferences.fetchSharedPrefData<Int>("Dark mode")) {
             AppCompatDelegate.MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)

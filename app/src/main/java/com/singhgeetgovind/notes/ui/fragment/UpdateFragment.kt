@@ -169,17 +169,17 @@ class UpdateFragment : Fragment(), RadioGroup.OnCheckedChangeListener,BetterLink
                         intentId = intentId
                     )
                 )
+                args.parcelableNotes?.let {
+                    if(date!=null) {
+                        cancelAlarm(requireContext(), it.intentId ?: 0)
+                    }
+                }
                 date?.let {
                     scheduleEvent(
                         requireContext(),
                         title.toString(), description.toString(),
                         date!!, intentId
                     )
-                }
-                args.parcelableNotes?.let {
-                    if(date!=null) {
-                        cancelAlarm(requireContext(), it.intentId ?: 0)
-                    }
                 }
                 findNavController().popBackStack()
             } else CustomSnackbar.snackBar(binding.root,"Please have some message")

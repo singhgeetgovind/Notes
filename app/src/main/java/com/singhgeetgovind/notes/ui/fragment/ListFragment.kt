@@ -121,6 +121,7 @@ class ListFragment : Fragment(), OnClickListener,
         itemAdapter.selectionTracker = initTracker()
         binding.loadImage()
         binding.searchTopBar.setOnMenuItemClickListener {
+
             when(it.itemId){
                 R.id.profile->{
                     findNavController().navigate(ListFragmentDirections.actionListFragmentToSettingFragment())

@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import com.singhgeetgovind.notes.receiver.AlarmBroadcastReceiver
 import com.singhgeetgovind.notes.utils.Constants
 
@@ -24,7 +25,7 @@ fun scheduleEvent( context: Context?, title:String="", description: String="",ge
         context,
         requestCode,
         broadcastIntent,
-        0
+        PendingIntent.FLAG_MUTABLE
     )
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, getInMilliSecond,broadcastPendingIntent)
@@ -45,7 +46,8 @@ fun cancelAlarm(context: Context?,requestCode: Int){
         context,
         requestCode,
         broadcastIntent,
-        PendingIntent.FLAG_NO_CREATE
+        PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
-    alarmManager.cancel(broadcastPendingIntent)
+    Log.d("TAG", "cancelAlarm: ${broadcastPendingIntent?.creatorUid.toString()}")
+    broadcastPendingIntent?.let{ alarmManager.cancel(broadcastPendingIntent) }
 }
