@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
@@ -25,7 +24,6 @@ import com.singhgeetgovind.notes.BuildConfig
 import com.singhgeetgovind.notes.R
 import com.singhgeetgovind.notes.databinding.FragmentSettingBinding
 import com.singhgeetgovind.notes.shared_preferences.SharedPreferences
-import com.singhgeetgovind.notes.viewmodels.MyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -33,7 +31,6 @@ import javax.inject.Inject
 class SettingFragment : Fragment() {
     private lateinit var binding: FragmentSettingBinding
     @Inject lateinit var sharedPreferences: SharedPreferences
-    private val viewModel: MyViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -97,7 +94,7 @@ class SettingFragment : Fragment() {
     (this as FragmentSettingBinding)
         try {
             Glide.with(requireContext())
-                .load(viewModel.profileUrl)
+                .load(sharedPreferences.fetchSharedPrefData<String>("ProfileImage"))
                 .error(R.drawable.ic_baseline_account_circle_24)
                 .centerCrop()
                 .circleCrop()
@@ -110,7 +107,7 @@ class SettingFragment : Fragment() {
                         target: Target<Drawable>?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        Log.e(ListFragment.TAG, "loadImage: failed")
+                        Log.e(ListFragment.TAG, "loadImage: failed ${sharedPreferences.fetchSharedPrefData<String>("ProfileImage")}")
                         return true
                     }
 

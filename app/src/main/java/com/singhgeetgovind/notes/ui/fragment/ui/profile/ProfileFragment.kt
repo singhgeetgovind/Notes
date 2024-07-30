@@ -1,4 +1,4 @@
-package com.singhgeetgovind.notes.ui.fragment.ui.login
+package com.singhgeetgovind.notes.ui.fragment.ui.profile
 
 import android.app.Activity
 import android.app.Dialog
@@ -19,6 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.singhgeetgovind.notes.R
 import com.singhgeetgovind.notes.databinding.FragmentProfileBinding
 import com.singhgeetgovind.notes.shared_preferences.SharedPreferences
+import com.singhgeetgovind.notes.utils.avatar.MicahAvatar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -27,6 +28,7 @@ class ProfileFragment : BottomSheetDialogFragment() {
     @Inject lateinit var sharedPreferences: SharedPreferences
     private var _binding: FragmentProfileBinding? = null
     lateinit var uploadFileLauncher_: ActivityResultLauncher<Intent?>
+    private lateinit var data : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         uploadFileLauncher_ = extracted()
@@ -34,17 +36,13 @@ class ProfileFragment : BottomSheetDialogFragment() {
     private fun extracted(): ActivityResultLauncher<Intent?> {
         val uploadFileLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == Activity.RESULT_OK) {
-                    if (it.data?.data != null) {
-                        Glide.with(requireContext())
-                            .load(it.data?.data.toString())
-                            .centerCrop()
-                            .error(R.drawable.ic_baseline_account_circle_24)
-                            .into(binding.profileImage)
-                        sharedPreferences.saveSharedPrefData("ProfileImage",
-                            it.data?.data.toString()
+                   data = it.data?.data.toString()
+                    Glide.with(requireContext())
+                        .load(data)
+                        .centerCrop()
+                        .error(R.drawable.ic_baseline_account_circle_24)
+                        .into(binding.profileImage)
 
-                        )
-                    }
                 }
             }
         return uploadFileLauncher
@@ -83,6 +81,10 @@ class ProfileFragment : BottomSheetDialogFragment() {
             sharedPreferences.saveSharedPrefData("FullName",
                 binding.fullName.editText?.text?.trim().toString()
             )
+            if(!this::data.isInitialized){
+                data = MicahAvatar.values().random().getBASEURL()
+                sharedPreferences.saveSharedPrefData("ProfileImage",data)
+            }
             val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.splashFragment,true)
             .build()
@@ -98,6 +100,7 @@ class ProfileFragment : BottomSheetDialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        uploadFileLauncher_.unregister()
         _binding = null
     }
 }

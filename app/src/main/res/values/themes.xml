@@ -25,6 +25,7 @@
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
         <item name="android:dialogTheme">@style/CustomDialogTheme</item>
         <item name="android:fitsSystemWindows">true</item>
+        <item name="fontFamily">@font/archivo_medium</item>
     </style>
 
 </resources>

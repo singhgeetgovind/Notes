@@ -6,44 +6,13 @@
     android:label="Add"
     app:startDestination="@id/splashFragment">
 
-    <fragment
-        android:id="@+id/addFragment"
-        android:name="com.singhgeetgovind.notes.ui.fragment.AddFragment"
-        android:label="Add"
-        tools:layout="@layout/fragment_add">
-        <action
-            android:id="@+id/action_addFragment_to_listFragment"
-            app:destination="@id/listFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right"
-            app:popUpTo="@id/listFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_addFragment_to_toolsLayoutBottomSheet"
-            app:destination="@id/toolsLayoutBottomSheet" />
-    </fragment>
+
     <fragment
         android:id="@+id/listFragment"
         android:name="com.singhgeetgovind.notes.ui.fragment.ListFragment"
         android:label="List"
         tools:layout="@layout/fragment_list" >
-        <action
-            android:id="@+id/action_listFragment_to_updateFragment"
-            app:destination="@id/updateFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-        <action
-            android:id="@+id/action_listFragment_to_addFragment"
-            app:destination="@id/addFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right"
-            app:popUpToInclusive="false" />
+
         <action
             android:id="@+id/action_listFragment_to_settingFragment"
             app:destination="@id/settingFragment"
@@ -54,27 +23,14 @@
         <action
             android:id="@+id/action_listFragment_to_searchDialogFragment"
             app:destination="@id/searchDialogFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/updateFragment"
-        android:name="com.singhgeetgovind.notes.ui.fragment.UpdateFragment"
-        android:label="Update"
-        tools:layout="@layout/fragment_update">
-
         <action
-            android:id="@+id/action_updateFragment_to_listFragment"
-            app:destination="@id/listFragment"
-            app:launchSingleTop="false"
-            app:popUpTo="@id/listFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_updateFragment_to_toolsLayoutBottomSheet"
-            app:destination="@id/toolsLayoutBottomSheet" />
-        <argument
-            android:name="parcelableNotes"
-            app:argType="com.singhgeetgovind.notes.model.Notes"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            android:id="@+id/action_listFragment_to_editFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpToInclusive="false"
+            app:destination="@id/editFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -115,7 +71,7 @@
     </fragment>
     <dialog
         android:id="@+id/profileFragment"
-        android:name="com.singhgeetgovind.notes.ui.fragment.ui.login.ProfileFragment"
+        android:name="com.singhgeetgovind.notes.ui.fragment.ui.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -129,4 +85,20 @@
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
     </dialog>
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.singhgeetgovind.notes.ui.fragment.EditFragment"
+        android:label="EditFragment" >
+        <argument
+            android:name="parcelableNotes"
+            app:argType="com.singhgeetgovind.notes.model.Notes"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_editFragment_to_listFragment"
+            app:destination="@id/listFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/listFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

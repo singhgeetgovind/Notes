@@ -16,7 +16,7 @@
         <item name="colorOnError">@color/colorSecondary</item>
         <item name="colorOnErrorContainer">@color/colorSecondary</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" >@color/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:textColor">@color/colorPrimaryVariant</item>
         <item name="fontFamily">@font/archivo_medium</item>
@@ -25,6 +25,7 @@
         <item name="actionModeStyle">@style/Custom.ActionMode</item>
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
         <item name="android:dialogTheme">@style/CustomDialogTheme</item>
+        <item name="android:fitsSystemWindows">true</item>
 
     </style>
 

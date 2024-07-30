@@ -1,11 +1,11 @@
 package com.singhgeetgovind.notes.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.singhgeetgovind.notes.model.Notes
 import com.singhgeetgovind.notes.repository.Repository
+import com.singhgeetgovind.notes.utils.avatar.MicahAvatar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,27 +16,21 @@ class MyViewModel @Inject constructor(private val repository: Repository) : View
     var profileUrl: String = ""
     get() {
         profileUrl=field
-        Log.e(TAG, "field: $field" )
         return field
     }
     set(value) {
         field = value.ifBlank {
-            arrayOf("https://xsgames.co/randomusers/assets/avatars/male/${(0..78).random()}.jpg",
-            "https://picsum.photos/200/300?random=${(100..200).random()}").random()
+            getLink()
         }
     }
 
-    //    val apiData = repository.getApiData1()
-    private val TAG = "MyViewModel"
+    private fun getLink() : String{
+        val name = MicahAvatar.values().random()
+       return name.getBASEURL()
+    }
 
     fun getData(): LiveData<List<Notes>> {
         return repository.getData()
-    }
-
-    fun addData(notes: Notes) {
-        viewModelScope.launch {
-            repository.addData(notes)
-        }
     }
 
     fun deleteData(id: List<Int>) {
@@ -48,12 +42,6 @@ class MyViewModel @Inject constructor(private val repository: Repository) : View
     fun deleteAll() {
         viewModelScope.launch {
             repository.deleteAll()
-        }
-    }
-
-    fun updateData(notes: Notes) {
-        viewModelScope.launch {
-            repository.updateData(notes)
         }
     }
 

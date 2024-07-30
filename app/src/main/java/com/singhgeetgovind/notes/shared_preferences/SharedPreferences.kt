@@ -23,10 +23,7 @@ class SharedPreferences @Inject constructor(
     }
     fun <T> fetchSharedPrefData(keyName:String):T?{
         val values = (sharedPreferences.all.filter { it.key == keyName }.values.firstOrNull())
-        Log.d(TAG, "fetchSharedPrefData: $values ")
-        if(values !=null ){
-            Log.d(TAG, "fetchSharedPrefData: ${values::class.simpleName} ")
-        }
+        Log.d(TAG, "fetchSharedPrefData: $keyName $values ")
         return (values as T)
     }
     fun <T> saveSharedPrefData(keyName:String,values:T):Boolean {

@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ui.fragment.ui.login.ProfileFragment">
+    tools:context=".ui.fragment.ui.profile.ProfileFragment">
 
     <FrameLayout
         android:id="@+id/profileImageLayout"

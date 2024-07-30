@@ -2,10 +2,12 @@ package com.singhgeetgovind.notes.utils
 
 import android.annotation.SuppressLint
 import android.util.Log
+import java.text.SimpleDateFormat
 import java.util.*
 
 object Utils {
     private const val TAG = "Utils"
+    const val DATE_PATTERN = "EEE dd MMM,hh:mm a"
     @SuppressLint("SimpleDateFormat")
     fun getInMilliSecond(cal: Calendar, hour: Int, minute: Int): Long {
         with(cal){
@@ -24,5 +26,9 @@ object Utils {
                 timeInMillis
             }
         }else cal.timeInMillis
+    }
+
+    fun formatDate(outputString: String,date:Long?): String {
+        return date?.let { SimpleDateFormat(outputString, Locale.ENGLISH).format(Date(date)) } ?: ""
     }
 }

@@ -4,14 +4,23 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.widget.DatePicker
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
+import com.singhgeetgovind.notes.ui.baseinterface.DateTimeCallBack
+import kotlinx.parcelize.Parcelize
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CustomDatePickerDialog(private val dateCallBack: DateCallBack): DialogFragment(),DatePickerDialog.OnDateSetListener{
+class CustomDatePickerDialog(): DialogFragment(),DatePickerDialog.OnDateSetListener{
+
+    private lateinit var dateCallBack: DateTimeCallBack
+    constructor(callBack: DateTimeCallBack) : this(){
+        this.dateCallBack = callBack
+    }
+
     private  val TAG = "CustomDatePickerDialog"
     private var year=0
     private var month=0
@@ -23,10 +32,10 @@ class CustomDatePickerDialog(private val dateCallBack: DateCallBack): DialogFrag
         year = calendar.get(Calendar.YEAR)
         month = calendar.get(Calendar.MONTH)
         day = calendar.get(Calendar.DAY_OF_MONTH)
-        val  datePickerDialog = DatePickerDialog(requireActivity(),this,year,month,day).apply {
+        val  datePickerDialog = DatePickerDialog(requireContext(),this,year,month,day).apply {
             this.datePicker.minDate = System.currentTimeMillis()
         }
-        Log.d(TAG,"getCreatedDate: ${SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH).format(calendar.timeInMillis)}")
+
         return  datePickerDialog
     }
 
@@ -34,9 +43,13 @@ class CustomDatePickerDialog(private val dateCallBack: DateCallBack): DialogFrag
         this.day=dayOfMonth
         this.year=year
         this.month =month
-        dateCallBack.dateClick(getDate())
+/*        val bundle = Bundle()
+        bundle.putParcelable("Calendar",ParcelableCalendar(getDate()))
+        setFragmentResult("DateTime",bundle)*/
+
+        if(this::dateCallBack.isInitialized){ dateCallBack.dateClick(getDate()) }
     }
-    fun getDate():Calendar{
+    private fun getDate():Calendar{
         val cal=Calendar.getInstance()
         return if(year==0 && month==0 && day==0){
             cal
@@ -49,7 +62,6 @@ class CustomDatePickerDialog(private val dateCallBack: DateCallBack): DialogFrag
             cal
         }
     }
-    interface DateCallBack{
-        fun dateClick(calendar: Calendar)
-    }
 }
+@Parcelize
+data class ParcelableCalendar(val cal : Calendar):Parcelable

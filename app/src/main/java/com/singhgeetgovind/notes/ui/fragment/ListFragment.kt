@@ -153,7 +153,7 @@ class ListFragment : Fragment(), OnClickListener,
         }
 //        binding.topBar.setOnMenuItemClickListener(this)
         binding.addButton.setOnClickListener {
-            findNavController().navigate(ListFragmentDirections.actionListFragmentToAddFragment())
+            findNavController().navigate(ListFragmentDirections.actionListFragmentToEditFragment())
         }
         searchViewModel.searchResult.observe(viewLifecycleOwner){
             searchAdapter.submitList(it)
@@ -198,7 +198,7 @@ class ListFragment : Fragment(), OnClickListener,
                     .centerCrop()
                     .circleCrop()
                     .diskCacheStrategy(DiskCacheStrategy.DATA)
-                    .sizeMultiplier(0.50f)
+//                    .sizeMultiplier(0.50f)
                     .addListener(object:RequestListener<Drawable>{
                         override fun onLoadFailed(
                             e: GlideException?,
@@ -229,13 +229,13 @@ class ListFragment : Fragment(), OnClickListener,
             }
     }
 
-    private fun FragmentListBinding.renderProfileImage(resource:Drawable) {
+    private fun FragmentListBinding.renderProfileImage(resource: Drawable) {
         lifecycleScope.launch(Dispatchers.Main){ searchTopBar.menu.findItem(R.id.profile).icon = resource }
     }
 
     override fun onItemClickListener(item: Notes) {
 
-        val action = ListFragmentDirections.actionListFragmentToUpdateFragment(item)
+        val action = ListFragmentDirections.actionListFragmentToEditFragment(item)
         findNavController().navigate(action)
     }
 
@@ -265,9 +265,7 @@ class ListFragment : Fragment(), OnClickListener,
                     itemAdapter.selectionTracker?.hasSelection()?.run {
                         if(this){
                             viewModel.deleteData(keyList.toList())
-                            if(itemAdapter.currentList is List<*>) {
-                                cancelOutReminder(keyList, itemAdapter.currentList as List<Notes>)
-                            }
+                            cancelOutReminder(keyList, itemAdapter.currentList as List<Notes>)
                             actionMode?.finish()
                         }
                     }
