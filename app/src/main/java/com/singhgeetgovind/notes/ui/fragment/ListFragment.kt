@@ -2,6 +2,7 @@ package com.singhgeetgovind.notes.ui.fragment
 
 
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.ActionMode
@@ -11,10 +12,11 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -40,10 +42,8 @@ import com.singhgeetgovind.notes.ui.activity.MainActivity
 import com.singhgeetgovind.notes.ui.adapter.ItemAdapter
 import com.singhgeetgovind.notes.ui.adapter.NotesDetailLookUp
 import com.singhgeetgovind.notes.ui.adapter.NotesKeyProvider
-import com.singhgeetgovind.notes.ui.adapter.SearchAdapter
 import com.singhgeetgovind.notes.ui.baseinterface.OnClickListener
 import com.singhgeetgovind.notes.viewmodels.MyViewModel
-import com.singhgeetgovind.notes.viewmodels.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -58,9 +58,7 @@ class ListFragment : Fragment(), OnClickListener,
     }
     private var actionMode: ActionMode? = null
     private var keyList: MutableList<Int> = mutableListOf()
-    private val viewModel: MyViewModel by activityViewModels()
-    private val searchAdapter: SearchAdapter by lazy { SearchAdapter() }
-    private val searchViewModel : SearchViewModel by viewModels()
+    private val viewModel: MyViewModel by viewModels()
     private lateinit var binding: FragmentListBinding
     private lateinit var itemAdapter: ItemAdapter
 
@@ -134,10 +132,11 @@ class ListFragment : Fragment(), OnClickListener,
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        viewModel.getData().observe(viewLifecycleOwner) {
-            if(it.isNotEmpty()){
+        viewModel.list().observe(viewLifecycleOwner) {
+            if(!it.isNullOrEmpty()){
                 if (it.size == 1) {
                     binding.listOfAffirmations.layoutManager =
                         StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -155,15 +154,21 @@ class ListFragment : Fragment(), OnClickListener,
         binding.addButton.setOnClickListener {
             findNavController().navigate(ListFragmentDirections.actionListFragmentToEditFragment())
         }
-        searchViewModel.searchResult.observe(viewLifecycleOwner){
-            searchAdapter.submitList(it)
-            binding.searchResult.adapter = searchAdapter
-        }
+
         with(binding){
+            searchField.editText.doOnTextChanged { text, _, _, _ ->
+                if(text.isNullOrBlank()){
+                   searchTopBar.text =""
+                }
+            }
             searchField.editText.setOnEditorActionListener { v, actionId, event ->
                     when (actionId) {
                         EditorInfo.IME_ACTION_SEARCH -> {
-                            searchViewModel.searchQuery.value = v.text.toString()
+                            if(v.text.trim().isNotBlank()){
+                                viewModel.searchQuery.value = v.text.toString()
+                                searchTopBar.text = v.text.toString()
+                            }
+                            searchField.hide()
                             true
                         }
                         else -> {
@@ -178,7 +183,6 @@ class ListFragment : Fragment(), OnClickListener,
                     }
                     SearchView.TransitionState.HIDDEN,SearchView.TransitionState.HIDING->{
                         addButton.isVisible= true
-                        searchAdapter.submitList(emptyList())
                     }
                     else->{
                         addButton.isVisible= false
@@ -301,10 +305,6 @@ class ListFragment : Fragment(), OnClickListener,
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         return when (item?.itemId) {
-            R.id.search -> {
-                findNavController().navigate(ListFragmentDirections.actionListFragmentToSearchDialogFragment())
-                true
-            }
 
             R.id.settings -> {
                 findNavController().navigate(ListFragmentDirections.actionListFragmentToSettingFragment())

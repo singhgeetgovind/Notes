@@ -26,6 +26,6 @@ interface NotesDao {
     @Query("UPDATE Notes set EventDone = 1 where IntentId=:intentId")
     suspend fun updateEventTrigger(intentId:Int)
 
-    @Query("SELECT * FROM NOTES WHERE Title LIKE '%' || :searchQuery || '%' OR Description LIKE '%' || :searchQuery || '%'")
+    @Query("SELECT * FROM NOTES WHERE Title LIKE '%' || :searchQuery || '%' ")
     fun searchQueryList(searchQuery:String) : LiveData<List<Notes>>
 }

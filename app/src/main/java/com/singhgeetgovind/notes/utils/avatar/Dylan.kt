@@ -1,7 +1,7 @@
 package com.singhgeetgovind.notes.utils.avatar
 
 /** https://api.dicebear.com/9.x/dylan/svg?seed=Felix&radius=50 */
-enum class DylanAvatar  {
+enum class Dylan  : Avatar {
     Midnight,
     Missy,
     Salem,
@@ -23,8 +23,8 @@ enum class DylanAvatar  {
     Miss_kitty,
     Garfield;
 
-    fun getBASEURL():String{
+    override fun getBASEURL():String{
        this.name.replace("_","")
-        return "https://api.dicebear.com/9.x/dylan/png?seed=${this.name}$&radius=50&backgroundType=gradientLinear"
+        return "$URL${this::class.simpleName?.lowercase()}/png?seed=${this.name}$&radius=50&&backgroundColor=c0aede,ffdfbf"
     }
 }

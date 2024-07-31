@@ -9,6 +9,7 @@
     <string name="delete">Delete</string>
     <string name="calendar">Calendar</string>
     <string name="search">Search</string>
+    <string name="search_by_title">Search Title</string>
     <string name="save">Save</string>
     <string name="view">View</string>
     <string name="update">Update</string>

@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -28,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SettingFragment : Fragment() {
+class SettingFragment : Fragment(),CompoundButton.OnCheckedChangeListener {
     private lateinit var binding: FragmentSettingBinding
     @Inject lateinit var sharedPreferences: SharedPreferences
     override fun onCreateView(
@@ -47,21 +48,15 @@ class SettingFragment : Fragment() {
         binding.apply {
             getDetails()
         }
-        binding.topAppBarSetting.setOnClickListener {
+        binding.topAppBarSetting.setNavigationOnClickListener{
             findNavController().popBackStack()
         }
-        binding.darkMode.setOnCheckedChangeListener { _, checked ->
-            when (checked) {
-                true -> {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    sharedPreferences.saveSharedPrefData("Dark mode",AppCompatDelegate.MODE_NIGHT_YES)
-                }
-                else -> {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    sharedPreferences.saveSharedPrefData("Dark mode", AppCompatDelegate.MODE_NIGHT_NO)
-                }
-            }
+
+        binding.editProfile.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToProfileFragment())
         }
+
+        binding.darkMode.setOnCheckedChangeListener (this)
         binding.clearDataBtn.setOnClickListener {
             if(sharedPreferences.clearPreferences()) {
                 Log.d("sharedPreferences", "onViewCreated: clear")
@@ -127,6 +122,19 @@ class SettingFragment : Fragment() {
 
         } catch (e: Exception) {
             Log.e(ListFragment.TAG, "loadImage: ${e.message}")
+        }
+    }
+
+    override fun onCheckedChanged(p0: CompoundButton?, checked: Boolean) {
+        when (checked) {
+            true -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                sharedPreferences.saveSharedPrefData("Dark mode",AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            else -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                sharedPreferences.saveSharedPrefData("Dark mode", AppCompatDelegate.MODE_NIGHT_NO)
+            }
         }
     }
 }

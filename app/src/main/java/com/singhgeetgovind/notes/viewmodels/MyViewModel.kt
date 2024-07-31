@@ -1,11 +1,13 @@
 package com.singhgeetgovind.notes.viewmodels
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.singhgeetgovind.notes.model.Notes
 import com.singhgeetgovind.notes.repository.Repository
-import com.singhgeetgovind.notes.utils.avatar.MicahAvatar
+import com.singhgeetgovind.notes.utils.avatar.Adventurer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,9 +25,21 @@ class MyViewModel @Inject constructor(private val repository: Repository) : View
             getLink()
         }
     }
+    val list : () -> LiveData<List<Notes>> = {
+        Transformations.switchMap(searchQuery) { query ->
+            if(query.isNullOrEmpty()){
+                getData()
+            } else{
+                repository.searchQueryList(query)
+            }
+        }
+    }
+    var searchQuery = MutableLiveData("")
+        private set
+
 
     private fun getLink() : String{
-        val name = MicahAvatar.values().random()
+        val name = Adventurer.values().random()
        return name.getBASEURL()
     }
 

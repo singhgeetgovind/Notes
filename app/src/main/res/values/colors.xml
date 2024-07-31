@@ -24,4 +24,5 @@
     <color name="cardBgColor">#2AE4E4E4</color>
     <color name="listBgColor">#65ECEFF1</color>
     <color name="greyedOut">#5C5C5C</color>
+    <color name="chip_icon_color">#17262A</color>
 </resources>

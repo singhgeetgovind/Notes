@@ -2,45 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
     android:paddingVertical="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageButton
-        android:id="@+id/gotoBtn"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginHorizontal="16dp"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/ic_baseline_search_24"
-        app:layout_constraintBottom_toBottomOf="@+id/searchText"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profileImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        tools:src="@tools:sample/avatars"
+        android:alpha="0.9"
+        app:shapeAppearanceOverlay="@style/ShapeableImageView.ShapeAppearance"
+        app:strokeColor="@color/colorPrimaryVariant"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorPrimaryVariant" />
-
-    <TextView
-        android:id="@+id/searchText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:ellipsize="end"
-        android:lines="1"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@id/deleteBtn"
-        app:layout_constraintStart_toEndOf="@+id/gotoBtn"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/emptyNotesMessage" />
-
-    <ImageButton
-        android:id="@+id/deleteBtn"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginHorizontal="16dp"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/baseline_close_24"
-        app:layout_constraintBottom_toBottomOf="@+id/searchText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorPrimaryVariant" />
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

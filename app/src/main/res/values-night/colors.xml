@@ -22,4 +22,5 @@
     <color name="chipStrokeColor">#4CAF50</color>
     <color name="cardBgColor">#2AE4E4E4</color>
     <color name="listBgColor">#86202020</color>
+    <color name="chip_icon_color">#FFFFFF</color>
 </resources>

@@ -9,6 +9,7 @@ import android.util.Log
 import android.widget.DatePicker
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
+import com.singhgeetgovind.notes.R
 import com.singhgeetgovind.notes.ui.baseinterface.DateTimeCallBack
 import kotlinx.parcelize.Parcelize
 import java.text.SimpleDateFormat
@@ -32,7 +33,7 @@ class CustomDatePickerDialog(): DialogFragment(),DatePickerDialog.OnDateSetListe
         year = calendar.get(Calendar.YEAR)
         month = calendar.get(Calendar.MONTH)
         day = calendar.get(Calendar.DAY_OF_MONTH)
-        val  datePickerDialog = DatePickerDialog(requireContext(),this,year,month,day).apply {
+        val  datePickerDialog = DatePickerDialog(requireContext(), R.style.CustomDatePicker,this,year,month,day).apply {
             this.datePicker.minDate = System.currentTimeMillis()
         }
 

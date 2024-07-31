@@ -40,27 +40,18 @@
     <com.google.android.material.search.SearchView
         android:id="@+id/searchField"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:autofillHints="no"
         android:drawablePadding="10dp"
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:maxLines="1"
-        android:hint="@string/search"
+        android:hint="@string/search_by_title"
         app:layout_anchor="@id/searchTopBar"
         app:iconifiedByDefault="false"
         app:queryBackground="@color/transparentBorder"
         app:queryHint="@string/search"
-        app:searchIcon="@null">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/searchResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/search_list_item"/>
-    </com.google.android.material.search.SearchView>
+        app:searchIcon="@null"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_button"

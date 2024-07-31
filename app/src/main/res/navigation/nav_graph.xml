@@ -20,9 +20,7 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
-        <action
-            android:id="@+id/action_listFragment_to_searchDialogFragment"
-            app:destination="@id/searchDialogFragment" />
+
         <action
             android:id="@+id/action_listFragment_to_editFragment"
             app:enterAnim="@android:anim/slide_in_left"
@@ -40,16 +38,15 @@
         <action
             android:id="@+id/action_settingFragment_to_splashFragment"
             app:destination="@id/splashFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <dialog
         android:id="@+id/toolsLayoutBottomSheet"
         android:name="com.singhgeetgovind.notes.ui.fragment.ToolsLayoutBottomSheet"
         android:label="ToolsLayoutBottomSheet" />
-    <dialog
-        android:id="@+id/searchDialogFragment"
-        android:name="com.singhgeetgovind.notes.ui.fragment.SearchDialogFragment"
-        android:label="fragment_search_dialog"
-        tools:layout="@layout/fragment_search_dialog" />
+
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.singhgeetgovind.notes.ui.fragment.SplashFragment"
