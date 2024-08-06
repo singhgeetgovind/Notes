@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+    <style name="Custom.FAB.ShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSizeTopLeft">15dp</item>
+        <item name="cornerSizeTopRight">2dp</item>
+        <item name="cornerSizeBottomLeft">2dp</item>
+        <item name="cornerSizeBottomRight">2dp</item>
+    </style>
+    <style name="Widget.App.ExtendedFloatingActionButton" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.SmallComponent</item>
+    </style>
+
+    <style name="Custom.ActionMode" parent="Widget.AppCompat.ActionMode">
+        <item name="background">@color/colorSecondary</item>
+        <item name="titleTextStyle">@style/Custom.ToolBar.Title.TextAppearance</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondary">@color/white</item>
+    </style>
+    <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="materialThemeOverlay">@style/Custom.ToolBar</item>
+    </style>
+    <style name="Custom.ToolBar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="background">@color/colorSecondary</item>
+        <item name="titleTextColor">@color/white</item>
+    </style>
+    <style name="CustomDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <!-- Customize the dialog appearance here -->
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@style/CustomDialogAnimation</item>
+    </style>
+
+    <style name="CustomDialogAnimation" parent="android:Animation">
+        <!-- Customize the dialog animation here -->
+        <item name="android:windowEnterAnimation">@anim/nav_default_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/nav_default_exit_anim</item>
+    </style>
+    <style name="Widget.Chip.Action" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="fontFamily">@font/archivo_semibold</item>
+        <item name="chipIconTint">@color/chip_icon_color</item>
+        <item name="closeIconTint">@color/chip_icon_color</item>
+        <item name="android:textSize">12sp</item>
+        <item name="closeIconSize">24sp</item>
+    </style>
+    <style name="Custom.ToolBar.Title.TextAppearance" parent="TextAppearance.AppCompat.Body1">
+        <item name="fontFamily">@font/archivo_medium</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="CustomTimePicker" parent="@style/ThemeOverlay.Material3.MaterialTimePicker">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+    </style>
+    <style name="CustomDatePicker" parent="@style/ThemeOverlay.Material3.MaterialCalendar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+    </style>
+</resources>

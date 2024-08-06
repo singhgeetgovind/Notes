@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/dateButton"
+        android:icon="@drawable/ic_baseline_calendar_today_24"
+        app:showAsAction="always"
+        android:title="@string/calendar" />
+    <item
+        android:id="@+id/timeButton"
+        android:icon="@drawable/ic_outline_add_alarm_24"
+        app:showAsAction="ifRoom"
+        android:title="@string/time" />
+    <item
+        android:id="@+id/saveButton"
+        android:icon="@drawable/save_enable_disable_state"
+        app:showAsAction="always"
+        android:title="@string/save" />
+</menu>
