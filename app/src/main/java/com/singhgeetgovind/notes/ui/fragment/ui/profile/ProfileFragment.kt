@@ -58,7 +58,7 @@ class ProfileFragment : BottomSheetDialogFragment(), OnSnapPositionChangeListene
         super.onViewCreated(view, savedInstanceState)
         binding.fullName.editText?.doAfterTextChanged {
             if (!it?.trim().isNullOrBlank()) {
-                binding.login.isEnabled = true
+                binding.save.isEnabled = true
             }
         }
 
@@ -69,7 +69,7 @@ class ProfileFragment : BottomSheetDialogFragment(), OnSnapPositionChangeListene
         }
 
 
-        binding.login.setOnClickListener {
+        binding.save.setOnClickListener {
             sharedPreferences.saveSharedPrefData("FullName",
                 binding.fullName.editText?.text?.trim().toString()
             )

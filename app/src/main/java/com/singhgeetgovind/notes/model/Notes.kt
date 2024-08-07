@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
-import java.util.*
+import java.util.Date
 
 
 @Entity(indices = [Index(value = ["IntentId"], unique = true)])
@@ -20,8 +20,8 @@ data class Notes(
     @ColumnInfo(name = "EventDate") val eventDate: Long?,
     @ColumnInfo(name = "IntentId") val intentId: Int?=0, //Id helps to cancel the alarm while deleting ❌
     @ColumnInfo(name = "EventDone") val eventDone: Int?=0, //Mark event is completed ✅
-) : BaseNotes,Parcelable
+) : BaseNotes(),Parcelable
 
-data class EmptyNotes(val id:Int,val message:String) : BaseNotes
+data class EmptyNotes(val id:Int,val message:String) : BaseNotes()
 
-interface BaseNotes
+abstract class BaseNotes

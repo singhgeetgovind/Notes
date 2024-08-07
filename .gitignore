@@ -56,7 +56,6 @@ proguard/
 .idea/dbnavigator.xml
 .idea/compiler.xml
 .idea/kotlinc.xml
-.idea/misc.xml
 # Android Studio 3 in .gitignore file.
 .idea/caches
 .idea/modules.xml

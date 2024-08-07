@@ -25,6 +25,9 @@ class NotesDaoTest {
     @get:Rule
     val hiltAndroidRule = HiltAndroidRule(this)
 
+    @get:Rule
+    val coroutineRule = MainCoroutineRule()
+
     @Inject
     lateinit var notesDatabase: NotesDatabase
 

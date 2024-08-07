@@ -42,7 +42,8 @@ import com.singhgeetgovind.notes.ui.activity.MainActivity
 import com.singhgeetgovind.notes.ui.adapter.ItemAdapter
 import com.singhgeetgovind.notes.ui.adapter.NotesDetailLookUp
 import com.singhgeetgovind.notes.ui.adapter.NotesKeyProvider
-import com.singhgeetgovind.notes.ui.baseinterface.OnClickListener
+import com.singhgeetgovind.notes.ui.baseinterface.OnItemClickListener
+import com.singhgeetgovind.notes.ui.baseinterface.OnLongItemClickListener
 import com.singhgeetgovind.notes.viewmodels.MyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -50,7 +51,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ListFragment : Fragment(), OnClickListener,
+class ListFragment : Fragment(), OnItemClickListener,OnLongItemClickListener,
     Toolbar.OnMenuItemClickListener {
 
     companion object {
@@ -161,7 +162,7 @@ class ListFragment : Fragment(), OnClickListener,
                    searchTopBar.text =""
                 }
             }
-            searchField.editText.setOnEditorActionListener { v, actionId, event ->
+            searchField.editText.setOnEditorActionListener { v, actionId, _ ->
                     when (actionId) {
                         EditorInfo.IME_ACTION_SEARCH -> {
                             if(v.text.trim().isNotBlank()){

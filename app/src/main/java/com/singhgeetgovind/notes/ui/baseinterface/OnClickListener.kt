@@ -8,3 +8,9 @@ interface OnClickListener {
     fun onLongItemClickListener(item:Notes,view : View,position: Int) : Boolean
 //    fun onItemStateChanged(key: Long, selected: Boolean)
 }
+interface OnItemClickListener : OnClickListener{
+    override fun onItemClickListener(item: Notes)
+}
+interface OnLongItemClickListener : OnClickListener{
+    override fun onLongItemClickListener(item:Notes,view : View,position: Int) : Boolean
+}
