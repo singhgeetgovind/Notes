@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/listBgColor"
-    tools:context=".ui.fragment.EditFragment">
+    tools:context=".ui.fragment.editscreen.EditFragment">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/topMenuAppBar"
         android:layout_width="match_parent"

@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.singhgeetgovind.notes.ui.fragment.ListFragment"
+        android:name="com.singhgeetgovind.notes.ui.fragment.homescreen.ListFragment"
         android:label="List"
         tools:layout="@layout/fragment_list" >
 
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.singhgeetgovind.notes.ui.fragment.SettingFragment"
+        android:name="com.singhgeetgovind.notes.ui.fragment.settingscreen.SettingFragment"
         android:label="Api Data"
         tools:layout="@layout/fragment_setting" >
         <action
@@ -44,12 +44,12 @@
     </fragment>
     <dialog
         android:id="@+id/toolsLayoutBottomSheet"
-        android:name="com.singhgeetgovind.notes.ui.fragment.ToolsLayoutBottomSheet"
+        android:name="com.singhgeetgovind.notes.ui.dialogs.ToolsLayoutBottomSheet"
         android:label="ToolsLayoutBottomSheet" />
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.singhgeetgovind.notes.ui.fragment.SplashFragment"
+        android:name="com.singhgeetgovind.notes.ui.fragment.splashscreen.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -84,11 +84,11 @@
     </dialog>
     <fragment
         android:id="@+id/editFragment"
-        android:name="com.singhgeetgovind.notes.ui.fragment.EditFragment"
+        android:name="com.singhgeetgovind.notes.ui.fragment.editscreen.EditFragment"
         android:label="EditFragment" >
         <argument
             android:name="parcelableNotes"
-            app:argType="com.singhgeetgovind.notes.model.Notes"
+            app:argType="com.singhgeetgovind.notes.data.model.Notes"
             app:nullable="true"
             android:defaultValue="@null" />
         <action

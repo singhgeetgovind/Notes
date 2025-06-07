@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.singhgeetgovind.notes.repository.Repository
+import com.singhgeetgovind.notes.data.repository.Repository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
@@ -13,7 +13,8 @@ import dagger.assisted.AssistedInject
 class AlarmWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
-    private val repository: Repository) : CoroutineWorker(context,workerParameters) {
+    private val repository: Repository
+) : CoroutineWorker(context,workerParameters) {
     private val TAG = "AlarmWorker"
 
     override suspend fun doWork(): Result {

@@ -2,11 +2,12 @@ package com.singhgeetgovind.notes.ui.adapter.listener
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
+import com.singhgeetgovind.notes.ui.baseinterface.OnSnapPositionChangeListener
 
 class SnapOnScrollListener(
     private val snapHelper: SnapHelper,
-    var behavior: Behavior = Behavior.NOTIFY_ON_SCROLL,
-    var onSnapPositionChangeListener: OnSnapPositionChangeListener? = null
+    private var behavior: Behavior = Behavior.NOTIFY_ON_SCROLL,
+    private var onSnapPositionChangeListener: OnSnapPositionChangeListener? = null
 ) : RecyclerView.OnScrollListener() {
 
     enum class Behavior {

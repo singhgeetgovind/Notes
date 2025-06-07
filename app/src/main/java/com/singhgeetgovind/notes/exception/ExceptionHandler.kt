@@ -3,7 +3,7 @@ package com.singhgeetgovind.notes.exception
 import android.app.Activity
 import android.content.Intent
 import android.os.Process
-import com.singhgeetgovind.notes.ui.activity.MainActivity2
+import com.singhgeetgovind.notes.ui.activity.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -47,7 +47,7 @@ fun Activity.handleUncaughtException() {
             }
             errorReport.append("end of background thread Crash Log ----------------\n\n")
             withContext(Dispatchers.Main) {
-                val intent = Intent(this@handleUncaughtException, MainActivity2::class.java).apply {
+                val intent = Intent(this@handleUncaughtException, MainActivity::class.java).apply {
                     putExtra("errorDeatils", errorReport.toString())
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 }

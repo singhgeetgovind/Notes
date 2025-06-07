@@ -12,19 +12,18 @@ import javax.inject.Singleton
 class SharedPreferences @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    /*companion object{
-        private const val TAG = "SharedPreferences"
-    }*/
-    private val TAG = "SharedPreferences"
-    private val sharedPreferences = context.getSharedPreferences("Theme", MODE_PRIVATE)
-    private val edit: SharedPreferences.Editor by lazy { sharedPreferences.edit() }
-    init {
-        Log.d(TAG, "intialize:")
+    companion object{
+        const val TAG = "SharedPreferences"
     }
-    fun <T> fetchSharedPrefData(keyName:String):T?{
+    val sharedPreferences: SharedPreferences = context.getSharedPreferences("Theme", MODE_PRIVATE)
+    private val edit: SharedPreferences.Editor by lazy { sharedPreferences.edit() }
+
+    inline fun <reified T> fetchSharedPrefData(keyName:String):T?{
         val values = (sharedPreferences.all.filter { it.key == keyName }.values.firstOrNull())
         Log.d(TAG, "fetchSharedPrefData: $keyName $values ")
-        return (values as T)
+        return if(values is T){
+            values
+        }else null
     }
     fun <T> saveSharedPrefData(keyName:String,values:T):Boolean {
         return when(values) {
@@ -47,9 +46,8 @@ class SharedPreferences @Inject constructor(
     }
     fun clearPreferences() : Boolean{
         edit.clear().apply()
-        return sharedPreferences.all.isEmpty().run{
+        return sharedPreferences.all.isEmpty().apply{
             Log.d(TAG, "clearPreferences: $this")
-            this
         }
     }
 }

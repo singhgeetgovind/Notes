@@ -19,3 +19,19 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keep class com.singhgeetgovind.notes.data.model.*
+# Keep the Notes class and its members
+-keep class com.singhgeetgovind.notes.data.model.Notes { *; }
+
+# If Notes is used as a Parcelable, add this rule as well
+-keepclassmembers class com.singhgeetgovind.notes.data.model.Notes {
+    public static final android.os.Parcelable$Creator *;
+}
+-keep class * implements android.os.Parcelable {
+        public static final android.os.Parcelable$Creator *;
+    }
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keepnames class * implements java.io.Serializable

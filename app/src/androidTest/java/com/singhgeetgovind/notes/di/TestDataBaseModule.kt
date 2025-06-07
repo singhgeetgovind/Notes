@@ -2,12 +2,10 @@ package com.singhgeetgovind.notes.di
 
 import android.content.Context
 import androidx.room.Room
-import com.singhgeetgovind.notes.dao.NotesDao
-import com.singhgeetgovind.notes.database.NotesDatabase
+import com.singhgeetgovind.notes.data.dao.NotesDao
+import com.singhgeetgovind.notes.data.database.NotesDatabase
 import com.singhgeetgovind.notes.di.module.DatabaseModule
-import com.singhgeetgovind.notes.repository.Repository
-import com.singhgeetgovind.notes.retrofit.MyRetrofitBuilder
-import com.singhgeetgovind.notes.retrofit.RetrofitApi
+import com.singhgeetgovind.notes.data.repository.Repository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -22,7 +20,7 @@ import javax.inject.Singleton
 class TestDataBaseModule  {
     @Provides
     @Singleton
-    fun provideNotesDatabase(@ApplicationContext context : Context):NotesDatabase{
+    fun provideNotesDatabase(@ApplicationContext context : Context): NotesDatabase {
         return Room.inMemoryDatabaseBuilder(
            context,
             NotesDatabase::class.java)
@@ -33,11 +31,6 @@ class TestDataBaseModule  {
     @Provides
     fun provideDao(notesDatabase: NotesDatabase) : NotesDao =
         notesDatabase.getDaoInstance()
-
-    @Singleton
-    @Provides
-    fun provideApiBuilder(retrofitBuilder: MyRetrofitBuilder) : RetrofitApi =
-        retrofitBuilder.getRetrofitApi()
 
     @Singleton
     @Provides

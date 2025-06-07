@@ -1,9 +1,9 @@
 package com.singhgeetgovind.notes
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.singhgeetgovind.notes.dao.NotesDao
-import com.singhgeetgovind.notes.database.NotesDatabase
-import com.singhgeetgovind.notes.model.Notes
+import com.singhgeetgovind.notes.data.dao.NotesDao
+import com.singhgeetgovind.notes.data.database.NotesDatabase
+import com.singhgeetgovind.notes.data.model.Notes
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest

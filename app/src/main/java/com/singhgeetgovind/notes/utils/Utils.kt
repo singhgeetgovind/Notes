@@ -3,7 +3,9 @@ package com.singhgeetgovind.notes.utils
 import android.annotation.SuppressLint
 import android.util.Log
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 object Utils {
     private const val TAG = "Utils"
@@ -31,4 +33,5 @@ object Utils {
     fun formatDate(outputString: String,date:Long?): String {
         return date?.let { SimpleDateFormat(outputString, Locale.ENGLISH).format(Date(date)) } ?: ""
     }
+
 }
